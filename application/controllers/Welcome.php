@@ -11,7 +11,7 @@ class Welcome extends CI_Controller {
     public function login() {
         $data['title'] = 'test';
         $data['name'] = 'hzycaicai';
-        $this->cismarty->assign('data', $data);
-        $this->cismarty->display('user/test.html');
+        $this->smarty3->assign('data', $data);
+        $this->smarty3->display('user/test.html');
     }
 }

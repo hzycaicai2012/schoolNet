@@ -12,9 +12,14 @@ class User extends CI_Controller
      * login page - hzy
      */
     public function login() {
+        $this->session->user = array(
+            'name' => 'hzycaicai2012',
+            'password' => '12345',
+            'id' => 1,
+        );
         $data['title'] = 'test';
         $data['name'] = 'hzycaicai';
-        $this->cismarty->assign('data', $data);
-        $this->cismarty->display('user/test.html');
+        $this->smarty3->assign('data', $data);
+        $this->smarty3->display('user/test.html');
     }
 }

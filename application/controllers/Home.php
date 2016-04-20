@@ -7,6 +7,10 @@
  */
 class Home extends CI_Controller {
     public function index() {
-        echo 'this is index page';
+        if (!$this->user->isLogin()) {
+            redirect('/user/login');
+        } else {
+            var_dump($this->user->getCurrentUser());
+        }
     }
 }
