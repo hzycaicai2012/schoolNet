@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="校园网,人人,校园人人">
+    <meta name="description" content="校园网，让我们离开校园后还能常联系~">
+    <meta name="author" content="hzycaicai">
+    <link rel="shortcut icon" href="http://www.baidu.com/favicon.ico">
+    <title>{%$title|default:'校园网'%}</title>
+    <link href="{%$BASE_URL%}static/css/libs/bootstrap.min.css" rel="stylesheet">
+    <link href="{%$BASE_URL%}static/css/main.css" rel="stylesheet">
+    {%block name="css"%}
+    {%/block%}
+    <!--[if lt IE 9]>
+    <script src="{%$BASE_URL%}static/js/libs/ie8-responsive-file-warning.js"></script>
+    <![endif]-->
+    <script src="{%$BASE_URL%}static/js/libs/ie-emulation-modes-warning.js"></script>
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body ng-app="SchoolNet">
+{%block name="body"%}
+{%block name="header"%}
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{%$BASE_URL%}home">校园网</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="{%$BASE_URL%}home">首页</a>
+                </li>
+                <li><a href="{%$BASE_URL%}my/relate">与我相关</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">我关注的<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{%$BASE_URL%}my/school">我的学校</a></li>
+                        <li><a href="{%$BASE_URL%}my/college">我的班级</a></li>
+                        <li><a href="{%$BASE_URL%}my/grade">我的班级</a></li>
+                        <li><a href="{%$BASE_URL%}my/friend">特别好友</a></li>
+                    </ul>
+                </li>
+                {%if $user.isAdmin%}
+                <li><a href="{%$BASE_URL%}admin">管理后台</a></li>
+                {%/if%}
+                <li><a href="{%$BASE_URL%}about">关于</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {%if $user == null%}
+                <li><a href="{%$BASE_URL%}user/login">登陆</a></li>
+                <li><a href="{%$BASE_URL%}user/register">注册</a></li>
+                {%else%}
+                <li><a href="{%$BASE_URL%}my/index">{%$user.name%}</a></li>
+                <li><a href="{%$BASE_URL%}user/logout">退出</a></li>
+                {%/if%}
+            </ul>
+        </div>
+    </div>
+</nav>
+{%/block%}
+<div class="container">
+    {%block name="main"%}
+    {%/block%}
+</div>
+{%/block%}
+<script src="{%$BASE_URL%}static/js/libs/jquery.min.js"></script>
+<script src="{%$BASE_URL%}static/js/libs/bootstrap.min.js"></script>
+<script src="{%$BASE_URL%}static/js/libs/angular.min.js"></script>
+<script src="{%$BASE_URL%}static/js/home/basis.js"></script>
+<script src="{%$BASE_URL%}static/js/libs/ie10-viewport-bug-workaround.js"></script>
+<script>
+    var baseUrl = "{%$BASE_URL%}";
+</script>
+{%block name="js"%}
+{%/block%}
+</body>
+</html>

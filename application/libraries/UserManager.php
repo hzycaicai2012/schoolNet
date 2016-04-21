@@ -11,10 +11,15 @@ class UserManager {
     }
 
     public function getCurrentUser() {
-        return $_SESSION['user'];
+        if ($this->isLogin()) {
+            return $_SESSION['user'];
+        }
+        return null;
     }
 
     public function auth() {
-
+        if (!isset($_SESSION['user'])) {
+            redirect('/user/login');
+        }
     }
 }

@@ -511,6 +511,36 @@ if ( ! is_php('5.4'))
  *  Call the requested method
  * ------------------------------------------------------
  */
+
+/**
+ * ------------------------------------------------------
+ * simply add the params to the GET array
+ * ------------------------------------------------------
+ */
+    if (isset($params) && is_array($params)) {
+        $params_len = count($params);
+        for ($i = 1; $i < $params_len;) {
+            if (!isset($_GET[$params[$i - 1]])) {
+                $_GET[$params[$i - 1]] = $params[$i];
+            }
+            $i += 2;
+        }
+    }
+
+/**
+ * ------------------------------------------------------
+ * Init the filter
+ * ------------------------------------------------------
+ */
+    $filter_list = call_user_func_array(array(&$CI, '_filter'), array());
+    if ($filter_list !== false && count($filter_list) > 0) {
+        foreach ($filter_list as $key => $val) {
+            if (is_array($val) && method_exists($class, $key) && in_array(strtolower($method), $val)) {
+                $filter_result = call_user_func_array(array(&$CI, $key), $params);
+            }
+        }
+    }
+
 	call_user_func_array(array(&$CI, $method), $params);
 
 	// Mark a benchmark end point
