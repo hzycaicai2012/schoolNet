@@ -17,18 +17,17 @@ class User extends BaseController
     }
 
     public function _loginFilter() {
-        var_dump($_GET);
     }
 
     /**
      * login page - hzy
      */
     public function login() {
-        $this->session->user = array(
-            'name' => 'hzycaicai',
-            'password' => '111',
-            'isAdmin' => true,
-        );
         $this->smarty3->display('user/login.html');
+    }
+
+    public function logout() {
+        $this->session->user = null;
+        redirect('/user/login');
     }
 }

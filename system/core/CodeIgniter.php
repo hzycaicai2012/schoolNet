@@ -534,11 +534,13 @@ if ( ! is_php('5.4'))
  * Init the filter
  * ------------------------------------------------------
  */
-    $filter_list = call_user_func_array(array(&$CI, '_filter'), array());
-    if ($filter_list !== false && count($filter_list) > 0) {
-        foreach ($filter_list as $key => $val) {
-            if (is_array($val) && method_exists($class, $key) && in_array(strtolower($method), $val)) {
-                $filter_result = call_user_func_array(array(&$CI, $key), $params);
+    if (method_exists($class, '_filter')) {
+        $filter_list = call_user_func_array(array(&$CI, '_filter'), array());
+        if ($filter_list !== false && count($filter_list) > 0) {
+            foreach ($filter_list as $key => $val) {
+                if (is_array($val) && method_exists($class, $key) && in_array(strtolower($method), $val)) {
+                    $filter_result = call_user_func_array(array(&$CI, $key), $params);
+                }
             }
         }
     }

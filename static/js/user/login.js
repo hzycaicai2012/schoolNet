@@ -31,6 +31,11 @@ schoolNetModule.controller('LoginController', ['$scope', '$http', function ($sco
         if (va === true) {
             $http.post(baseUrl + 'auth/login', $scope.user).success(function (res) {
                 console.log(res);
+                if (parseInt(res.errno, 10) === 0) {
+                    location.href = (baseUrl + 'home/index');
+                } else {
+                    alert(res.msg);
+                }
             });
         }
     }

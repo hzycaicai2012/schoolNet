@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.29, created on 2016-04-20 17:32:25
+/* Smarty version 3.1.29, created on 2016-04-21 18:06:24
   from "E:\xampp\htdocs\schoolNet\application\views\layout\boot_base.html" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.29',
-  'unifunc' => 'content_5717a109803dd4_22576657',
+  'unifunc' => 'content_5718fa80c4c478_59643902',
   'file_dependency' => 
   array (
     'a9ee1a64e80a130c66952f5d6c8e8cd185268048' => 
     array (
       0 => 'E:\\xampp\\htdocs\\schoolNet\\application\\views\\layout\\boot_base.html',
-      1 => 1461166342,
+      1 => 1461254761,
       2 => 'file',
     ),
   ),
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_5717a109803dd4_22576657 ($_smarty_tpl) {
+function content_5718fa80c4c478_59643902 ($_smarty_tpl) {
 $_smarty_tpl->ext->_inheritance->init($_smarty_tpl, false);
 ?>
 <!DOCTYPE html>
@@ -40,7 +40,7 @@ static/css/libs/bootstrap.min.css" rel="stylesheet">
 static/css/main.css" rel="stylesheet">
     <?php 
 $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "css", array (
-  0 => 'block_217305717a1097d1152_94597046',
+  0 => 'block_294155718fa80bfa3d0_38657439',
   1 => false,
   3 => 0,
   2 => 0,
@@ -69,7 +69,7 @@ static/js/libs/ie-emulation-modes-warning.js"><?php echo '</script'; ?>
 <body ng-app="SchoolNet">
 <?php 
 $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "body", array (
-  0 => 'block_124035717a1097d4fd4_55748418',
+  0 => 'block_324045718fa80c020e7_53788784',
   1 => false,
   3 => 0,
   2 => 0,
@@ -104,7 +104,7 @@ static/js/libs/ie10-viewport-bug-workaround.js"><?php echo '</script'; ?>
 >
 <?php 
 $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "js", array (
-  0 => 'block_238545717a1097fff51_46642265',
+  0 => 'block_221475718fa80c485f8_18949901',
   1 => false,
   3 => 0,
   2 => 0,
@@ -114,14 +114,14 @@ $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "js", array (
 </body>
 </html><?php }
 /* {block 'css'}  file:layout/boot_base.html */
-function block_217305717a1097d1152_94597046($_smarty_tpl, $_blockParentStack) {
+function block_294155718fa80bfa3d0_38657439($_smarty_tpl, $_blockParentStack) {
 ?>
 
     <?php
 }
 /* {/block 'css'} */
 /* {block 'header'}  file:layout/boot_base.html */
-function block_233445717a1097d8e55_06338816($_smarty_tpl, $_blockParentStack) {
+function block_115815718fa80c05f61_44031375($_smarty_tpl, $_blockParentStack) {
 ?>
 
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -159,7 +159,7 @@ my/grade">我的班级</a></li>
 my/friend">特别好友</a></li>
                     </ul>
                 </li>
-                <?php if ($_smarty_tpl->tpl_vars['user']->value['isAdmin']) {?>
+                <?php if ($_smarty_tpl->tpl_vars['user']->value['admin'] == 1) {?>
                 <li><a href="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['BASE_URL']->value, ENT_QUOTES, 'UTF-8');?>
 admin">管理后台</a></li>
                 <?php }?>
@@ -187,19 +187,19 @@ user/logout">退出</a></li>
 }
 /* {/block 'header'} */
 /* {block 'main'}  file:layout/boot_base.html */
-function block_91295717a1097f8256_03022064($_smarty_tpl, $_blockParentStack) {
+function block_23545718fa80c2d062_36362899($_smarty_tpl, $_blockParentStack) {
 ?>
 
     <?php
 }
 /* {/block 'main'} */
 /* {block 'body'}  file:layout/boot_base.html */
-function block_124035717a1097d4fd4_55748418($_smarty_tpl, $_blockParentStack) {
+function block_324045718fa80c020e7_53788784($_smarty_tpl, $_blockParentStack) {
 ?>
 
 <?php 
 $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "header", array (
-  0 => 'block_233445717a1097d8e55_06338816',
+  0 => 'block_115815718fa80c05f61_44031375',
   1 => false,
   3 => 0,
   2 => 0,
@@ -209,7 +209,7 @@ $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "header", array (
 <div class="container">
     <?php 
 $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "main", array (
-  0 => 'block_91295717a1097f8256_03022064',
+  0 => 'block_23545718fa80c2d062_36362899',
   1 => false,
   3 => 0,
   2 => 0,
@@ -221,7 +221,7 @@ $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "main", array (
 }
 /* {/block 'body'} */
 /* {block 'js'}  file:layout/boot_base.html */
-function block_238545717a1097fff51_46642265($_smarty_tpl, $_blockParentStack) {
+function block_221475718fa80c485f8_18949901($_smarty_tpl, $_blockParentStack) {
 ?>
 
 <?php

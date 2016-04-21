@@ -12,6 +12,28 @@ class Auth extends CI_Controller {
             $str = file_get_contents('php://input');
             $_POST = json_decode($str, true);
         }
-        echo json_encode(array('errno' => 0, 'data' => $this->user->getCurrentUser()));
+        $result = array('errno' => 0, 'msg' => 'success');
+        if (!isset($this->session->user) || $this->session->user['id'] <= 0) {
+            $user = $this->user_model->getUserByName($_POST['name'], $_POST['password']);
+            if (!isset($user)) {
+                $user = $this->user_model->getUserByEmail($_POST['name'], $_POST['password']);
+            }
+            if (!isset($user)) {
+                $result['errno'] = -2;
+                $result['msg'] = '用户名或密码错误~';
+            } else {
+                $this->session->user = array(
+                    'name' => $user->name,
+                    'nick' => $user->nick,
+                    'id' => $user->id,
+                    'phone' => $user->phone,
+                    'email' => $user->email,
+                    'admin' => $user->is_admin,
+                );
+                $result['errno'] = 0;
+                $result['msg'] = 'success';
+            }
+        }
+        echo json_encode($result);
     }
 }

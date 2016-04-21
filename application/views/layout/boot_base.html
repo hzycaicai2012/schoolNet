@@ -53,7 +53,7 @@
                         <li><a href="{%$BASE_URL%}my/friend">特别好友</a></li>
                     </ul>
                 </li>
-                {%if $user.isAdmin%}
+                {%if $user.admin == 1%}
                 <li><a href="{%$BASE_URL%}admin">管理后台</a></li>
                 {%/if%}
                 <li><a href="{%$BASE_URL%}about">关于</a></li>
