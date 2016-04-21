@@ -520,8 +520,10 @@ if ( ! is_php('5.4'))
     if (isset($params) && is_array($params)) {
         $params_len = count($params);
         for ($i = 1; $i < $params_len;) {
-            if (!isset($_GET[$params[$i - 1]])) {
+            if ($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_GET[$params[$i - 1]])) {
                 $_GET[$params[$i - 1]] = $params[$i];
+            } else if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST[$params[$i - 1]])) {
+                $_POST[$params[$i - 1]] = $params[$i];
             }
             $i += 2;
         }
