@@ -30,6 +30,9 @@ class Article_Model extends CI_Model {
         if (!isset($userInfo)) {
             return array('errno' => -2, 'msg' => '找不到该用户');
         }
+        if (intval($userInfo->is_valid) === 0) {
+            return array('errno' => -3, 'msg' => '未通过审核前无法发送状态');
+        }
         $type = intval($data['type']);
         $type = ($type >= 1 && $type <= 3) ? $type : 4;
         $insertData = array(
@@ -105,7 +108,7 @@ class Article_Model extends CI_Model {
     public function getFriendArticleList($user) {
         $sql = "SELECT article.* FROM article inner join friends
             on article.user_id = friends.friend_id
-            WHERE friends.user_id = ? and article.type = 4";
+            WHERE friends.user_id = ? and article.type = 4 order by article.id desc";
         $query = $this->db->query($sql, array($user->id));
         return $query->result();
     }
@@ -116,7 +119,7 @@ class Article_Model extends CI_Model {
      */
     public function getSchoolArticleList($user) {
         $schoolId = intval($user->school_id);
-        $sql = "SELECT * FROM article WHERE type = ? and school_id = ?";
+        $sql = "SELECT * FROM article WHERE type = ? and school_id = ? order by id desc";
         $query = $this->db->query($sql, array(self::SCHOOL_TYPE, $schoolId));
         return $query->result();
     }
@@ -127,7 +130,7 @@ class Article_Model extends CI_Model {
      */
     public function getCollegeArticleList($user) {
         $collegeId = intval($user->college_id);
-        $sql = "SELECT * FROM article WHERE type = ? and college_id = ?";
+        $sql = "SELECT * FROM article WHERE type = ? and college_id = ? order by id desc";
         $query = $this->db->query($sql, array(self::COLLEGE_TYPE, $collegeId));
         return $query->result();
     }
@@ -138,7 +141,7 @@ class Article_Model extends CI_Model {
      */
     public function getGradeArticleList($user) {
         $gradeId = intval($user->grade_id);
-        $sql = "SELECT * FROM article WHERE type = ? and grade_id = ?";
+        $sql = "SELECT * FROM article WHERE type = ? and grade_id = ? order by id desc";
         $query = $this->db->query($sql, array(self::GRADE_TYPE, $gradeId));
         return $query->result();
     }

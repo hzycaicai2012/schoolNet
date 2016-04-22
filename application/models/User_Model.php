@@ -29,7 +29,7 @@ class User_Model extends CI_Model {
      * @param $password
      * @return mixed
      */
-    public function getUserByName($name, $password) {
+    public function authUserByName($name, $password) {
         $sql = "SELECT * FROM user WHERE nick = ? AND password = ?";
         $query = $this->db->query($sql, array($name, $password));
         return $query->row();
@@ -40,9 +40,37 @@ class User_Model extends CI_Model {
      * @param $password
      * @return mixed
      */
-    public function getUserByEmail($name, $password) {
+    public function authUserByEmail($name, $password) {
         $sql = "SELECT * FROM user WHERE email = ? AND password = ?";
         $query = $this->db->query($sql, array($name, $password));
         return $query->row();
+    }
+
+    /**
+     * @param $nick
+     * @return mixed
+     */
+    public function getUserByName($nick) {
+        $sql = "SELECT * FROM user WHERE nick = ?";
+        $query = $this->db->query($sql, array($nick));
+        return $query->row();
+    }
+
+    /**
+     * @param $email
+     * @return mixed
+     */
+    public function getUserByEmail($email) {
+        $sql = "SELECT * FROM user WHERE email = ?";
+        $query = $this->db->query($sql, array($email));
+        return $query->row();
+    }
+
+    public function addNewUser($data) {
+        if (isset($data)) {
+            $this->db->insert('user', $data);
+            return true;
+        }
+        return false;
     }
 }

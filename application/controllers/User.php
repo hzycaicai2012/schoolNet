@@ -34,4 +34,15 @@ class User extends BaseController
     public function register() {
         $this->smarty3->display('user/register.html');
     }
+
+    public function baseInfo() {
+        $result = array(
+            'errno' => 0,
+            'data' => array(),
+        );
+        $result['data']['school_list'] = $this->school_model->getSchoolList();
+        $result['data']['college_list'] = $this->college_model->getMergedCollegeList();
+        $result['data']['grade_list'] = $this->grade_model->getMergedGradeList();
+        echo json_encode($result);
+    }
 }

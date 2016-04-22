@@ -36,6 +36,9 @@ class Comment_Model extends CI_Model {
         if (!isset($userInfo)) {
             return array('errno' => -2, 'msg' => '找不到该用户');
         }
+        if (intval($userInfo->is_valid) === 0) {
+            return array('errno' => -3, 'msg' => '未通过审核前无法评论');
+        }
         $articleId = intval($data['id']);
         $content = $data['content'];
         $article = $this->article_model->getArticleById($articleId);
