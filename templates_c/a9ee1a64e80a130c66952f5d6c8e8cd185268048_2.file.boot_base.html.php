@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.29, created on 2016-04-21 18:06:24
+/* Smarty version 3.1.29, created on 2016-04-22 06:24:30
   from "E:\xampp\htdocs\schoolNet\application\views\layout\boot_base.html" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.29',
-  'unifunc' => 'content_5718fa80c4c478_59643902',
+  'unifunc' => 'content_5719a77ebfd7b9_76518621',
   'file_dependency' => 
   array (
     'a9ee1a64e80a130c66952f5d6c8e8cd185268048' => 
     array (
       0 => 'E:\\xampp\\htdocs\\schoolNet\\application\\views\\layout\\boot_base.html',
-      1 => 1461254761,
+      1 => 1461299034,
       2 => 'file',
     ),
   ),
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_5718fa80c4c478_59643902 ($_smarty_tpl) {
+function content_5719a77ebfd7b9_76518621 ($_smarty_tpl) {
 $_smarty_tpl->ext->_inheritance->init($_smarty_tpl, false);
 ?>
 <!DOCTYPE html>
@@ -40,7 +40,7 @@ static/css/libs/bootstrap.min.css" rel="stylesheet">
 static/css/main.css" rel="stylesheet">
     <?php 
 $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "css", array (
-  0 => 'block_294155718fa80bfa3d0_38657439',
+  0 => 'block_185685719a77ebc6ca8_58223276',
   1 => false,
   3 => 0,
   2 => 0,
@@ -69,7 +69,7 @@ static/js/libs/ie-emulation-modes-warning.js"><?php echo '</script'; ?>
 <body ng-app="SchoolNet">
 <?php 
 $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "body", array (
-  0 => 'block_324045718fa80c020e7_53788784',
+  0 => 'block_5455719a77ebce9a2_01162103',
   1 => false,
   3 => 0,
   2 => 0,
@@ -104,7 +104,7 @@ static/js/libs/ie10-viewport-bug-workaround.js"><?php echo '</script'; ?>
 >
 <?php 
 $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "js", array (
-  0 => 'block_221475718fa80c485f8_18949901',
+  0 => 'block_259085719a77ebf9934_20671114',
   1 => false,
   3 => 0,
   2 => 0,
@@ -114,14 +114,14 @@ $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "js", array (
 </body>
 </html><?php }
 /* {block 'css'}  file:layout/boot_base.html */
-function block_294155718fa80bfa3d0_38657439($_smarty_tpl, $_blockParentStack) {
+function block_185685719a77ebc6ca8_58223276($_smarty_tpl, $_blockParentStack) {
 ?>
 
     <?php
 }
 /* {/block 'css'} */
 /* {block 'header'}  file:layout/boot_base.html */
-function block_115815718fa80c05f61_44031375($_smarty_tpl, $_blockParentStack) {
+function block_97985719a77ebce9a1_35168714($_smarty_tpl, $_blockParentStack) {
 ?>
 
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -150,13 +150,13 @@ my/relate">与我相关</a></li>
                        aria-expanded="false">我关注的<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['BASE_URL']->value, ENT_QUOTES, 'UTF-8');?>
-my/school">我的学校</a></li>
+home/index/type/1">我的学校</a></li>
                         <li><a href="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['BASE_URL']->value, ENT_QUOTES, 'UTF-8');?>
-my/college">我的班级</a></li>
+home/index/type/2">我的学院</a></li>
                         <li><a href="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['BASE_URL']->value, ENT_QUOTES, 'UTF-8');?>
-my/grade">我的班级</a></li>
+home/index/type/3">我的班级</a></li>
                         <li><a href="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['BASE_URL']->value, ENT_QUOTES, 'UTF-8');?>
-my/friend">特别好友</a></li>
+home/index">好友状态</a></li>
                     </ul>
                 </li>
                 <?php if ($_smarty_tpl->tpl_vars['user']->value['admin'] == 1) {?>
@@ -187,19 +187,19 @@ user/logout">退出</a></li>
 }
 /* {/block 'header'} */
 /* {block 'main'}  file:layout/boot_base.html */
-function block_23545718fa80c2d062_36362899($_smarty_tpl, $_blockParentStack) {
+function block_204875719a77ebf1c31_70831671($_smarty_tpl, $_blockParentStack) {
 ?>
 
     <?php
 }
 /* {/block 'main'} */
 /* {block 'body'}  file:layout/boot_base.html */
-function block_324045718fa80c020e7_53788784($_smarty_tpl, $_blockParentStack) {
+function block_5455719a77ebce9a2_01162103($_smarty_tpl, $_blockParentStack) {
 ?>
 
 <?php 
 $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "header", array (
-  0 => 'block_115815718fa80c05f61_44031375',
+  0 => 'block_97985719a77ebce9a1_35168714',
   1 => false,
   3 => 0,
   2 => 0,
@@ -209,7 +209,7 @@ $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "header", array (
 <div class="container">
     <?php 
 $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "main", array (
-  0 => 'block_23545718fa80c2d062_36362899',
+  0 => 'block_204875719a77ebf1c31_70831671',
   1 => false,
   3 => 0,
   2 => 0,
@@ -221,7 +221,7 @@ $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "main", array (
 }
 /* {/block 'body'} */
 /* {block 'js'}  file:layout/boot_base.html */
-function block_221475718fa80c485f8_18949901($_smarty_tpl, $_blockParentStack) {
+function block_259085719a77ebf9934_20671114($_smarty_tpl, $_blockParentStack) {
 ?>
 
 <?php
