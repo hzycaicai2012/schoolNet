@@ -8,6 +8,9 @@ require_once "BaseController.php";
  */
 class Home extends BaseController {
     public function index() {
+        // var_dump($this->session->user);
+        $type = isset($_GET['type']) ? intval($_GET['type']) : 4;
+        $this->smarty3->assign('type', $type);
         $this->smarty3->display('home/index.html');
     }
 }
