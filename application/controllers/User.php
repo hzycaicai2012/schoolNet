@@ -30,4 +30,8 @@ class User extends BaseController
         $this->session->user = null;
         redirect('/user/login');
     }
+
+    public function register() {
+        $this->smarty3->display('user/register.html');
+    }
 }
