@@ -30,4 +30,19 @@ class Message_Model extends CI_Model {
         $this->db->where('id', $id);
         $this->db->update('message', $data);
     }
+
+    public function insertCommentMessage($articleId, $userId, $comment) {
+        $replyUser = $this->user_model->getUserById($userId);
+        $user = $this->session->user;
+        $article = $this->article_model->getArticleById(intval($articleId));
+        $title = $user['nick'] . '回复了您';
+        $content = $user['nick'] . '在状态“' . $article->content . '”中回复了您： ' . $comment;
+        $data = array(
+            'user_id' => $replyUser->id,
+            'title' => $title,
+            'content' => $content,
+            'created' => date('Y-m-d H;i:s'),
+        );
+        $this->db->insert('message', $data);
+    }
 }

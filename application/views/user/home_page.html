@@ -51,7 +51,10 @@
                                    class="user-name" target="_blank" ng-bind="comment.user_name"></a>
                                 <span class="article-comment-item-time" ng-bind="comment.created"></span>
                             </p>
-                            <span class="article-comment-item-content">{{comment.content}}</span>
+                            <div class="article-comment-item-content"
+                                 ng-click="replyComment(comment.user_id, comment.user_name, article.userComment)">
+                                {{comment.content}}
+                            </div>
                         </div>
                     </div>
                     <div class="article-comment-list-item-wrap clearfix">
@@ -60,9 +63,10 @@
                             <img src="{%$BASE_URL%}{%$user.avatar%}" class="user-avatar">
                         </a>
                         <div class="article-comment-item clearfix">
-                            <input type="text" class="form-control comment-text-input" placeholder="输入回复" ng-model="article.userComment">
+                            <input type="text" class="form-control comment-text-input"
+                                   placeholder="输入回复" ng-model="article.userComment.content">
                             <button type="submit" class="btn btn-primary"
-                                    ng-disabled="article.userComment == null || article.userComment == ''"
+                                    ng-disabled="article.userComment == null || article.userComment.content == ''"
                                     ng-click="submitResponse(article)">回复</button>
                         </div>
                     </div>

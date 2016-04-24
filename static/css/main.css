@@ -191,3 +191,10 @@ body {
 .unread-count {
     color: #f00;
 }
+
+.control-item-btn {
+    text-align: center;
+    color: #0786e9;
+    cursor: pointer;
+    font-size: 14px;
+}

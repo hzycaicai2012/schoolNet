@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.29, created on 2016-04-23 16:53:39
+/* Smarty version 3.1.29, created on 2016-04-24 16:18:57
   from "E:\xampp\htdocs\schoolNet\application\views\home\index.html" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.29',
-  'unifunc' => 'content_571b8c73747e89_74286860',
+  'unifunc' => 'content_571cd5d1806e48_16389114',
   'file_dependency' => 
   array (
     '3ca7cda2b7298710237ee59397fa69697c5611d6' => 
     array (
       0 => 'E:\\xampp\\htdocs\\schoolNet\\application\\views\\home\\index.html',
-      1 => 1461423216,
+      1 => 1461507488,
       2 => 'file',
     ),
   ),
@@ -20,13 +20,13 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
     'file:layout/boot_base.html' => 1,
   ),
 ),false)) {
-function content_571b8c73747e89_74286860 ($_smarty_tpl) {
+function content_571cd5d1806e48_16389114 ($_smarty_tpl) {
 $_smarty_tpl->ext->_inheritance->init($_smarty_tpl, true);
 ?>
 
 <?php 
 $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "main", array (
-  0 => 'block_9704571b8c7372c905_49102924',
+  0 => 'block_28840571cd5d17c8635_55587514',
   1 => false,
   3 => 0,
   2 => 0,
@@ -35,7 +35,7 @@ $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "main", array (
 
 <?php 
 $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "js", array (
-  0 => 'block_1025571b8c73747e86_26427224',
+  0 => 'block_22465571cd5d17ff140_29072310',
   1 => false,
   3 => 0,
   2 => 0,
@@ -45,7 +45,7 @@ $_smarty_tpl->ext->_inheritance->endChild($_smarty_tpl);
 $_smarty_tpl->smarty->ext->_subtemplate->render($_smarty_tpl, "file:layout/boot_base.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 2, false);
 }
 /* {block 'main'}  file:home/index.html */
-function block_9704571b8c7372c905_49102924($_smarty_tpl, $_blockParentStack) {
+function block_28840571cd5d17c8635_55587514($_smarty_tpl, $_blockParentStack) {
 ?>
 
 <div class="row" ng-controller="MainController" ng-init="init(<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['type']->value, ENT_QUOTES, 'UTF-8');?>
@@ -123,7 +123,7 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['user']->value['avatar'], ENT_QUOTE
                             <input type="text" class="form-control comment-text-input" placeholder="输入回复"
                                    ng-model="article.userComment.content">
                             <button type="submit" class="btn btn-primary"
-                                    ng-disabled="article.userComment == null || article.userComment == ''"
+                                    ng-disabled="article.userComment == null || article.userComment.content == ''"
                                     ng-click="submitResponse(article)">回复</button>
                         </div>
                     </div>
@@ -151,7 +151,7 @@ static/img/home/empty.gif">
 }
 /* {/block 'main'} */
 /* {block 'js'}  file:home/index.html */
-function block_1025571b8c73747e86_26427224($_smarty_tpl, $_blockParentStack) {
+function block_22465571cd5d17ff140_29072310($_smarty_tpl, $_blockParentStack) {
 ?>
 
 <?php echo '<script'; ?>

@@ -10,6 +10,8 @@
                      ng-class="{'admin-op-active-button' : (currentPage == 'college')}">添加学院</div>
                 <div class="admin-op-button" ng-click="switchPage('grade')"
                      ng-class="{'admin-op-active-button' : (currentPage == 'grade')}">添加班级</div>
+                <div class="admin-op-button" ng-click="switchPage('user')"
+                     ng-class="{'admin-op-active-button' : (currentPage == 'user')}">管理用户</div>
             </div>
         </div>
         <div class="admin-page-operate-wrap" ng-show="currentPage == 'school'">
@@ -248,6 +250,91 @@
                 </div>
             </div>
         </div>
+        <div class="admin-page-operate-wrap" ng-show="currentPage == 'user'">
+            <div class="admin-page-operate-content" ng-show="schoolList.length > 0">
+                <table class="table table-hover table-striped">
+                    <tr>
+                        <th>序号</th>
+                        <th>昵称</th>
+                        <th>姓名</th>
+                        <th>学校</th>
+                        <th>学院</th>
+                        <th>班级</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr ng-repeat="user in userList track by $index">
+                        <th scope="row" ng-bind="($index+1)"></th>
+                        <td ng-bind="user.nick"></td>
+                        <td ng-bind="user.name"></td>
+                        <td ng-bind="user.school_name"></td>
+                        <td ng-bind="user.college_name"></td>
+                        <td ng-bind="user.grade_name"></td>
+                        <td>
+                            <span ng-show="user.is_admin == 0" class="control-item-btn"
+                                  ng-click="updateUserStatus(user.id, 'admin', 1)">设为管理员</span>
+                            <span ng-show="user.is_admin != 0" class="control-item-btn"
+                                  ng-click="updateUserStatus(user.id, 'admin', 0)">取消管理员</span>
+                            <span ng-show="user.is_valid != 0" class="control-item-btn"
+                                  ng-click="updateUserStatus(user.id, 'valid', 0)">禁言</span>
+                            <span ng-show="user.is_valid == 0" class="control-item-btn"
+                                  ng-click="updateUserStatus(user.id, 'valid', 1)">取消禁言</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="article-list-item-wrap" ng-repeat="article in articleList track by $index">
+                <div class="article-list-item-head clearfix">
+                    <div class="article-user-avatar">
+                        <a href="{%$BASE_URL%}user/homePage/id/{{article.article.user_id}}" target="_blank">
+                            <img ng-src="{%$BASE_URL%}{{article.article.avatar}}"
+                                 width="50" title="{{article.article.user_name}}">
+                        </a>
+                    </div>
+                    <div class="article-user-info-wrap">
+                        <div class="article-user-name" ng-bind="article.article.user_name">
+                        </div>
+                        <div class="article-create-info"
+                             ng-bind="article.article.type_name + ' | ' + article.article.created">
+                        </div>
+                    </div>
+                </div>
+                <div class="article-list-item" ng-bind="article.article.content">
+                </div>
+                <div class="article-comment-list-wrap">
+                    <div class="article-comment-list-item-wrap clearfix"  ng-repeat="comment in article.comment">
+                        <a href="{%$BASE_URL%}user/homePage/id/{{comment.user_id}}"
+                           target="_blank" class="article-comment-avatar">
+                            <img ng-src="{%$BASE_URL%}{{comment.avatar}}" class="user-avatar">
+                        </a>
+                        <div class="article-comment-item">
+                            <p class="article-comment-item-info clearfix">
+                                <a href="{%$BASE_URL%}user/homePage/id/{{comment.user_id}}"
+                                   target="_blank" class="user-name" target="_blank" ng-bind="comment.user_name"></a>
+                                <span class="article-comment-item-time" ng-bind="comment.created"></span>
+                            </p>
+                            <div class="article-comment-item-content"
+                                 ng-click="replyComment(comment.user_id, comment.user_name, article.userComment)">
+                                {{comment.content}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="article-comment-list-item-wrap clearfix">
+                        <a href="{%$BASE_URL%}user/homePage/id/{%$user.id%}"
+                           target="_blank" class="article-comment-avatar">
+                            <img src="{%$BASE_URL%}{%$user.avatar%}" class="user-avatar">
+                        </a>
+                        <div class="article-comment-item clearfix">
+                            <input type="text" class="form-control comment-text-input" placeholder="输入回复"
+                                   ng-model="article.userComment.content">
+                            <button type="submit" class="btn btn-primary"
+                                    ng-disabled="article.userComment == null || article.userComment == ''"
+                                    ng-click="submitResponse(article)">回复</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
         <div class="sidebar">

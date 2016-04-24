@@ -65,7 +65,7 @@
                             <input type="text" class="form-control comment-text-input" placeholder="输入回复"
                                    ng-model="article.userComment.content">
                             <button type="submit" class="btn btn-primary"
-                                    ng-disabled="article.userComment == null || article.userComment == ''"
+                                    ng-disabled="article.userComment == null || article.userComment.content == ''"
                                     ng-click="submitResponse(article)">回复</button>
                         </div>
                     </div>

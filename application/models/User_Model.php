@@ -77,4 +77,17 @@ class User_Model extends CI_Model {
         }
         return false;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUserList() {
+        $sql = "SELECT user.*, school.name school_name,
+            college.name college_name, grades.name grade_name FROM user
+            inner join school on user.school_id=school.id
+            inner join college on user.college_id=college.id
+            inner join grades on user.grade_id=grades.id WHERE 1 order by user.id desc";
+        $query = $this->db->query($sql, array());
+        return $query->result();
+    }
 }

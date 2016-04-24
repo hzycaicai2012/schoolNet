@@ -5,13 +5,17 @@ schoolNetModule.controller('AdminController', ['$scope', '$http', function ($sco
     $scope.currentPage = 'school';
 
     $scope.switchPage = function(page) {
-        $scope.initSchoolData();
         $scope.currentPage = page;
-        $scope.schoolName = '';
-        $scope.collegeName = '';
-        $scope.gradeName = '';
-        $scope.currentSchool = null;
-        $scope.currentCollege = null;
+        if (page != 'user') {
+            $scope.initSchoolData();
+            $scope.schoolName = '';
+            $scope.collegeName = '';
+            $scope.gradeName = '';
+            $scope.currentSchool = null;
+            $scope.currentCollege = null;
+        } else {
+            $scope.initUserData();
+        }
     };
 
     var schoolList = [];
@@ -43,6 +47,36 @@ schoolNetModule.controller('AdminController', ['$scope', '$http', function ($sco
             }
             $scope.collegeList = [];
             $scope.gradeList = [];
+        });
+    };
+
+    $scope.initUserData = function() {
+        $http.get(baseUrl + 'my/getUserList').success(function (res) {
+            console.log(res);
+            if (parseInt(res.errno, 10) === 0) {
+                $scope.userList = res.data;
+            } else {
+                $scope.userList = [];
+            }
+        });
+    };
+
+    $scope.updateUserStatus = function(userId, action, status) {
+        status = parseInt(status, 10);
+        status = status === 0 ? 0 : 1;
+        action = action === 'admin' ? 'admin' : 'valid';
+        var data = {
+            id: userId,
+            action: action,
+            status: status
+        };
+        $http.post(baseUrl + 'my/updateUserStatus', data).success(function (res) {
+            console.log(res);
+            if (parseInt(res.errno, 10) === 0) {
+                $scope.initUserData();
+            } else {
+                alert(res.msg);
+            }
         });
     };
 

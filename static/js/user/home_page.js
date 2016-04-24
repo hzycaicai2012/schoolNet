@@ -13,25 +13,39 @@ schoolNetModule.controller('HomePageController', ['$scope', '$http', function ($
         '公开', '校内公开', '院内公开', '班内公开', '好友公开'
     ];
 
+    var wrapArticle = function(article) {
+        var type = parseInt(article.article.type, 10);
+        if (type < 1 || type > 3) {
+            type = 4;
+        }
+        article.article.type_name = articleTypeMap[type];
+        article.userComment = {
+            content: '',
+            user_id : -1
+        };
+        return article;
+    };
+
     $scope.init = function(id) {
         id = parseInt(id, 10);
         $http.get(baseUrl + 'article/getUserArticles/id/' + id).success(function (res) {
             console.log(res);
             if (parseInt(res.errno, 10) === 0) {
+                var articleList = [];
                 angular.forEach(res.data, function(item) {
-                    var type = parseInt(item.article.type, 10);
-                    if (type < 1 || type > 3) {
-                        type = 4;
-                    }
-                    item.article.type_name = articleTypeMap[type];
-                    item.userComment = '';
+                    articleList.push(wrapArticle(item));
                 });
-                $scope.articleList = res.data;
+                $scope.articleList = articleList;
                 $scope.userInfo = res.user;
             } else {
                 $scope.articleList = [];
             }
         });
+    };
+
+    $scope.replyComment = function(id, name, userComment) {
+        userComment.content = ('回复 ' + name + '：');
+        userComment.user_id = id;
     };
 
     $scope.submitMessage = function() {
@@ -50,16 +64,13 @@ schoolNetModule.controller('HomePageController', ['$scope', '$http', function ($
     };
 
     var initArticleItem = function(id) {
-        console.log('init article item');
         $http.get(baseUrl + 'article/getArticleItem/id/' + id).success(function(res) {
-            console.log(res);
-            console.log(res.errno);
             if (parseInt(res.errno, 10) === 0) {
                 var data = res.data;
                 var articleList = [];
                 angular.forEach($scope.articleList, function(item) {
                     if (parseInt(item.article.id, 10) === parseInt(data.article.id, 10)) {
-                        articleList.push(data);
+                        articleList.push(wrapArticle(data));
                     } else {
                         articleList.push(item);
                     }
@@ -70,14 +81,13 @@ schoolNetModule.controller('HomePageController', ['$scope', '$http', function ($
     };
 
     $scope.submitResponse = function(article) {
-        if (article.userComment != null || article.userComment !== '') {
+        if (article.userComment != null || article.userComment.content !== '') {
             var data = {
                 id: article.article.id,
-                content: article.userComment
+                content: article.userComment.content,
+                reply_user: article.userComment.user_id
             };
             $http.post(baseUrl + 'article/addComment', data).success(function (res) {
-                console.log(res.errno);
-                console.log(data.id);
                 if (parseInt(res.errno, 10) === 0) {
                     initArticleItem(data.id);
                 } else {

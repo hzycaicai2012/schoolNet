@@ -60,6 +60,7 @@ class Article extends CI_Controller {
         if (!isset($user) || $user['id'] <= 0) {
             echo json_encode(array('errno' => -1, 'msg' => '请先登录'));
         } else {
+            $this->message_model->insertCommentMessage($_POST['id'], $_POST['reply_user'], $_POST['content']);
             $result = $this->comment_model->addComment($user, $_POST);
             echo json_encode($result);
         }

@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.29, created on 2016-04-24 04:53:19
+/* Smarty version 3.1.29, created on 2016-04-24 16:19:48
   from "E:\xampp\htdocs\schoolNet\application\views\user\home_page.html" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.29',
-  'unifunc' => 'content_571c351fc0ea21_91377465',
+  'unifunc' => 'content_571cd60480a793_45654475',
   'file_dependency' => 
   array (
     '9eeafa9b9331fe84af86693a774b2d9854398f36' => 
     array (
       0 => 'E:\\xampp\\htdocs\\schoolNet\\application\\views\\user\\home_page.html',
-      1 => 1461466375,
+      1 => 1461507578,
       2 => 'file',
     ),
   ),
@@ -20,13 +20,13 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
     'file:layout/boot_base.html' => 1,
   ),
 ),false)) {
-function content_571c351fc0ea21_91377465 ($_smarty_tpl) {
+function content_571cd60480a793_45654475 ($_smarty_tpl) {
 $_smarty_tpl->ext->_inheritance->init($_smarty_tpl, true);
 ?>
 
 <?php 
 $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "main", array (
-  0 => 'block_7558571c351fbd7f22_14389863',
+  0 => 'block_25798571cd6047c8104_96728120',
   1 => false,
   3 => 0,
   2 => 0,
@@ -35,7 +35,7 @@ $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "main", array (
 
 <?php 
 $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "css", array (
-  0 => 'block_5703571c351fc02ea8_79517379',
+  0 => 'block_27783571cd6047fec16_56771016',
   1 => false,
   3 => 0,
   2 => 0,
@@ -45,7 +45,7 @@ $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "css", array (
 
 <?php 
 $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "js", array (
-  0 => 'block_20084571c351fc0aba4_75246049',
+  0 => 'block_1972571cd604806911_98678961',
   1 => false,
   3 => 0,
   2 => 0,
@@ -55,7 +55,7 @@ $_smarty_tpl->ext->_inheritance->endChild($_smarty_tpl);
 $_smarty_tpl->smarty->ext->_subtemplate->render($_smarty_tpl, "file:layout/boot_base.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 2, false);
 }
 /* {block 'main'}  file:user/home_page.html */
-function block_7558571c351fbd7f22_14389863($_smarty_tpl, $_blockParentStack) {
+function block_25798571cd6047c8104_96728120($_smarty_tpl, $_blockParentStack) {
 ?>
 
 <div class="row user-info-wrap">
@@ -114,7 +114,10 @@ user/homePage/id/{comment.user_id}"
                                    class="user-name" target="_blank" ng-bind="comment.user_name"></a>
                                 <span class="article-comment-item-time" ng-bind="comment.created"></span>
                             </p>
-                            <span class="article-comment-item-content">{{comment.content}}</span>
+                            <div class="article-comment-item-content"
+                                 ng-click="replyComment(comment.user_id, comment.user_name, article.userComment)">
+                                {{comment.content}}
+                            </div>
                         </div>
                     </div>
                     <div class="article-comment-list-item-wrap clearfix">
@@ -127,9 +130,10 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['user']->value['avatar'], ENT_QUOTE
 " class="user-avatar">
                         </a>
                         <div class="article-comment-item clearfix">
-                            <input type="text" class="form-control comment-text-input" placeholder="输入回复" ng-model="article.userComment">
+                            <input type="text" class="form-control comment-text-input"
+                                   placeholder="输入回复" ng-model="article.userComment.content">
                             <button type="submit" class="btn btn-primary"
-                                    ng-disabled="article.userComment == null || article.userComment == ''"
+                                    ng-disabled="article.userComment == null || article.userComment.content == ''"
                                     ng-click="submitResponse(article)">回复</button>
                         </div>
                     </div>
@@ -171,7 +175,7 @@ user/homePage/id/{{userInfo.id}}" target="_blank">
 }
 /* {/block 'main'} */
 /* {block 'css'}  file:user/home_page.html */
-function block_5703571c351fc02ea8_79517379($_smarty_tpl, $_blockParentStack) {
+function block_27783571cd6047fec16_56771016($_smarty_tpl, $_blockParentStack) {
 ?>
 
 <link href="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['BASE_URL']->value, ENT_QUOTES, 'UTF-8');?>
@@ -180,7 +184,7 @@ static/css/user/home_page.css" rel="stylesheet">
 }
 /* {/block 'css'} */
 /* {block 'js'}  file:user/home_page.html */
-function block_20084571c351fc0aba4_75246049($_smarty_tpl, $_blockParentStack) {
+function block_1972571cd604806911_98678961($_smarty_tpl, $_blockParentStack) {
 ?>
 
 <?php echo '<script'; ?>

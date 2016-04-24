@@ -12,11 +12,11 @@ class My extends CI_Controller {
         return array(
             '_loginFilter' => array('messagelist'),
             '_adminFilter' => array(
-                'getschoollist', 'getcollegelist', 'getgradelist',
-                'addnewschool', 'addnewcollege', 'addnewgrade',
+                'getschoollist', 'getcollegelist', 'getgradelist','updateuserstatus',
+                'addnewschool', 'addnewcollege', 'addnewgrade', 'getuserlist',
             ),
             '_postFilter' => array(
-                'addnewschool', 'addnewcollege', 'addnewgrade',
+                'addnewschool', 'addnewcollege', 'addnewgrade', 'updateuserstatus',
             ),
         );
     }
@@ -131,6 +131,32 @@ class My extends CI_Controller {
             }
         } else {
             echo json_encode(array('errno' => -1, 'msg' => '校名不能为空'));
+        }
+    }
+
+    public function getUserList() {
+        $result = array('errno' => 0, 'data' => array());
+        $result['data'] = $this->user_model->getUserList();
+        echo json_encode($result);
+    }
+
+    public function updateUserStatus() {
+        $id = intval($_POST['id']);
+        $action = $_POST['action'];
+        $status = intval($_POST['status']);
+        $status = $status === 0 ? 0 : 1;
+        $user = $this->user_model->getUserById($id);
+        if (isset($user)) {
+            if ($action == 'admin' || $action == 'valid') {
+                $data = $action == 'admin' ? array('is_admin' => $status) : array('is_valid' => $status);
+                $this->db->where('id', $id);
+                $this->db->update('user', $data);
+                echo json_encode(array('errno' => 0, 'msg' => ''));
+            } else {
+                echo json_encode(array('errno' => -1, 'msg' => '操作不存在'));
+            }
+        } else {
+            echo json_encode(array('errno' => -1, 'msg' => '该用户不存在'));
         }
     }
 
