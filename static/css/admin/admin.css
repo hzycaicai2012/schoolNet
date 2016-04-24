@@ -21,16 +21,23 @@
 }
 
 .admin-page-operate-controls input {
-    width: 25%;
+    max-width: 25%;
     float: left;
     display: inline-block;
+    margin-right: 10px;
+}
+
+.admin-page-operate-controls select {
+    max-width: 25%;
+    float: left;
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .admin-page-operate-controls button {
     max-width: 25%;
     float: left;
     display: inline-block;
-    margin-left: 10px;
 }
 
 .admin-page-operate-content {

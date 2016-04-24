@@ -10,7 +10,7 @@ require_once "BaseController.php";
 class My extends CI_Controller {
     public function _filter() {
         return array(
-            '_loginFilter' => array('messagelist', 'baseinfo'),
+            '_loginFilter' => array('messagelist'),
             '_adminFilter' => array(
                 'getschoollist', 'getcollegelist', 'getgradelist',
                 'addnewschool', 'addnewcollege', 'addnewgrade',
@@ -92,13 +92,23 @@ class My extends CI_Controller {
     }
 
     public function getCollegeList() {
-        $schoolList = $this->school_model->getSchoolList();
-        echo json_encode(array('errno' => 0, 'data' => $schoolList));
+        $id = intval($_GET['schoolId']);
+        if ($id <= 0) {
+            echo json_encode(array('errno' => 0, 'data' => array()));
+        } else {
+            $collegeList = $this->college_model->getCollegeListBySchool($id);
+            echo json_encode(array('errno' => 0, 'data' => $collegeList));
+        }
     }
 
     public function getGradeList() {
-        $schoolList = $this->school_model->getSchoolList();
-        echo json_encode(array('errno' => 0, 'data' => $schoolList));
+        $id = intval($_GET['collegeId']);
+        if ($id <= 0) {
+            echo json_encode(array('errno' => 0, 'data' => array()));
+        } else {
+            $gradeList = $this->grade_model->getGradeListByCollege($id);
+            echo json_encode(array('errno' => 0, 'data' => $gradeList));
+        }
     }
 
     public function addNewSchool() {
@@ -124,14 +134,54 @@ class My extends CI_Controller {
         }
     }
 
+    /**
+     *
+     */
     public function addNewCollege() {
-        $schoolList = $this->school_model->getSchoolList();
-        echo json_encode(array('errno' => 0, 'data' => $schoolList));
+        $schoolId = intval($_POST['school_id']);
+        $collegeName = $_POST['college_name'];
+        $school = $this->school_model->getSchoolById($schoolId);
+        $college = $this->college_model->getCollegeByName($schoolId, $collegeName);
+
+        if (!isset($school)) {
+            echo json_encode(array('errno' => -1, 'msg' => '该学校不存在'));
+        } else {
+            if (isset($college) || empty($collegeName)) {
+                echo json_encode(array('errno' => -1, 'msg' => '该学院已存在'));
+            } else {
+                $data = array(
+                    'name' => $collegeName,
+                    'school_id' => $schoolId,
+                    'created' => date('Y-m-d H:i:s'),
+                );
+                $this->college_model->addNewCollege($data);
+                echo json_encode(array('errno' => 0, 'msg' => ''));
+            }
+        }
     }
 
     public function addNewGrade() {
-        $schoolList = $this->school_model->getSchoolList();
-        echo json_encode(array('errno' => 0, 'data' => $schoolList));
-    }
+        $schoolId = intval($_POST['school_id']);
+        $collegeId = intval($_POST['college_id']);
+        $gradeName = $_POST['name'];
+        $college = $this->college_model->getCollegeById($collegeId);
+        $grade = $this->grade_model->getGradeByName($collegeId, $gradeName);
 
+        if (!isset($college)) {
+            echo json_encode(array('errno' => -1, 'msg' => '该学院不存在'));
+        } else {
+            if (isset($grade) || empty($gradeName)) {
+                echo json_encode(array('errno' => -1, 'msg' => '该班级已存在'));
+            } else {
+                $data = array(
+                    'name' => $gradeName,
+                    'school_id' => $schoolId,
+                    'college_id' => $collegeId,
+                    'created' => date('Y-m-d H:i:s'),
+                );
+                $this->grade_model->addNewGrade($data);
+                echo json_encode(array('errno' => 0, 'msg' => ''));
+            }
+        }
+    }
 }

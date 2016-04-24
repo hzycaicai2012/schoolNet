@@ -31,6 +31,16 @@ class School_Model extends CI_Model {
     }
 
     /**
+     * @param $id
+     * @return mixed
+     */
+    public function getSchoolById($id) {
+        $sql = "SELECT * FROM `school` WHERE id = ? order by id desc";
+        $query = $this->db->query($sql, array($id));
+        return $query->row();
+    }
+
+    /**
      * @param $data
      * @return bool
      */

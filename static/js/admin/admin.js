@@ -5,15 +5,18 @@ schoolNetModule.controller('AdminController', ['$scope', '$http', function ($sco
     $scope.currentPage = 'school';
 
     $scope.switchPage = function(page) {
-        if (page == 'school') {
-            $scope.initSchoolData();
-        } else if (page == 'college') {
-            $scope.initCollegeData();
-        } else if (page == 'grade') {
-            $scope.initGradeData();
-        }
+        $scope.initSchoolData();
         $scope.currentPage = page;
+        $scope.schoolName = '';
+        $scope.collegeName = '';
+        $scope.gradeName = '';
+        $scope.currentSchool = null;
+        $scope.currentCollege = null;
     };
+
+    var schoolList = [];
+    var collegeList = [];
+    var gradeList = [];
 
     $scope.schoolList = [];
     $scope.collegeList = [];
@@ -21,6 +24,8 @@ schoolNetModule.controller('AdminController', ['$scope', '$http', function ($sco
 
     // for school page
     $scope.schoolName = '';
+    $scope.collegeName = '';
+    $scope.gradeName = '';
 
     // for college page
     $scope.currentSchool = null;
@@ -34,17 +39,46 @@ schoolNetModule.controller('AdminController', ['$scope', '$http', function ($sco
             if (parseInt(res.errno, 10) === 0) {
                 $scope.schoolList = res.data;
             } else {
-                alert(res.msg);
+                $scope.schoolList = [];
             }
+            $scope.collegeList = [];
+            $scope.gradeList = [];
         });
     };
 
-    $scope.initCollegeData = function() {
-        
+    var initCollegeList = function() {
+        if ($scope.currentSchool != null && $scope.currentSchool != '') {
+            $http.get(baseUrl + 'my/getCollegeList/schoolId/' + $scope.currentSchool.id).success(function (res) {
+                console.log(res);
+                if (parseInt(res.errno, 10) === 0) {
+                    $scope.collegeList = res.data;
+                } else {
+                    $scope.collegeList = [];
+                }
+                $scope.gradeList = [];
+            });
+        }
     };
 
-    $scope.initGradeData = function() {
+    var initGradeList = function() {
+        if ($scope.currentCollege != null && $scope.currentCollege != '') {
+            $http.get(baseUrl + 'my/getGradeList/collegeId/' + $scope.currentCollege.id).success(function (res) {
+                console.log(res);
+                if (parseInt(res.errno, 10) === 0) {
+                    $scope.gradeList = res.data;
+                } else {
+                    $scope.gradeList = [];
+                }
+            });
+        }
+    };
 
+    $scope.schoolChange = function() {
+        initCollegeList();
+    };
+
+    $scope.collegeChange = function() {
+        initGradeList();
     };
 
     $scope.addNewSchool = function() {
@@ -57,6 +91,46 @@ schoolNetModule.controller('AdminController', ['$scope', '$http', function ($sco
                 if (parseInt(res.errno, 10) === 0) {
                     $scope.switchPage('school');
                     $scope.schoolName = '';
+                } else {
+                    alert(res.msg);
+                }
+            });
+        }
+    };
+
+    $scope.addNewCollege = function() {
+        if ($scope.currentSchool != null) {
+            var school = $scope.currentSchool;
+            var data = {
+                school_id: $scope.currentSchool.id,
+                college_name: $scope.collegeName
+            };
+            console.log(data);
+            $http.post(baseUrl + 'my/addNewCollege', data).success(function (res) {
+                console.log(res);
+                if (parseInt(res.errno, 10) === 0) {
+                    initCollegeList();
+                    $scope.collegeName = '';
+                } else {
+                    alert(res.msg);
+                }
+            });
+        }
+    };
+
+    $scope.addNewGrade = function() {
+        if ($scope.currentSchool != null && $scope.currentCollege != null) {
+            var data = {
+                school_id: $scope.currentCollege.school_id,
+                college_id: $scope.currentCollege.id,
+                name: $scope.gradeName
+            };
+            console.log(data);
+            $http.post(baseUrl + 'my/addNewGrade', data).success(function (res) {
+                console.log(res);
+                if (parseInt(res.errno, 10) === 0) {
+                    initGradeList();
+                    $scope.gradeName = '';
                 } else {
                     alert(res.msg);
                 }

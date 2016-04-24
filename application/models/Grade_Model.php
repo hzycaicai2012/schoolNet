@@ -37,4 +37,37 @@ class Grade_Model extends CI_Model {
         }
         return $result;
     }
+
+    /**
+     * @param $collegeId
+     * @return mixed
+     */
+    public function getGradeListByCollege($collegeId) {
+        $sql = "SELECT * FROM `grades` WHERE college_id=? order by id desc";
+        $query = $this->db->query($sql, array($collegeId));
+        return $query->result();
+    }
+
+    /**
+     * @param $collegeId
+     * @param $name
+     * @return mixed
+     */
+    public function getGradeByName($collegeId, $name) {
+        $sql = "SELECT * FROM `grades` WHERE college_id = ? and name = ? order by id desc";
+        $query = $this->db->query($sql, array($collegeId, $name));
+        return $query->row();
+    }
+
+    /**
+     * @param $data
+     * @return bool
+     */
+    public function addNewGrade($data) {
+        if (isset($data)) {
+            $this->db->insert('grades', $data);
+            return true;
+        }
+        return false;
+    }
 }
