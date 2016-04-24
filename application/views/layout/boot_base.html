@@ -39,31 +39,43 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active">
+                <li {%if $nav_index=='home'%} class="active"{%/if%}>
                     <a href="{%$BASE_URL%}home">首页</a>
                 </li>
-                <li><a href="{%$BASE_URL%}my/relate">与我相关</a></li>
-                <li class="dropdown">
+                <li {%if $nav_index=='messagelist'%} class="active"{%/if%}>
+                    <a href="{%$BASE_URL%}user/messageList">
+                        与我相关
+                        {%if $unread_count>0%}
+                        <span class="unread-count">({%$unread_count%})</span>
+                        {%/if%}
+                    </a>
+                </li>
+                <li class="dropdown {%if $nav_index=='my'%}active{%/if%}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">我关注的<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="{%$BASE_URL%}home/index/type/1">我的学校</a></li>
                         <li><a href="{%$BASE_URL%}home/index/type/2">我的学院</a></li>
                         <li><a href="{%$BASE_URL%}home/index/type/3">我的班级</a></li>
-                        <li><a href="{%$BASE_URL%}home/index">好友状态</a></li>
+                        <li><a href="{%$BASE_URL%}home/index/type/4">好友状态</a></li>
                     </ul>
                 </li>
-                {%if $user.admin == 1%}
-                <li><a href="{%$BASE_URL%}admin">管理后台</a></li>
+                {%if $user != null && $user.is_admin == 1%}
+                <li {%if $nav_index=='admin'%} class="active"{%/if%}><a href="{%$BASE_URL%}admin">管理后台</a></li>
                 {%/if%}
-                <li><a href="{%$BASE_URL%}about">关于</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {%if $user == null%}
-                <li><a href="{%$BASE_URL%}user/login">登陆</a></li>
-                <li><a href="{%$BASE_URL%}user/register">注册</a></li>
+                <li {%if $nav_index=='login'%} class="active"{%/if%}>
+                    <a href="{%$BASE_URL%}user/login">登陆</a>
+                </li>
+                <li {%if $nav_index=='register'%} class="active"{%/if%}>
+                    <a href="{%$BASE_URL%}user/register">注册</a>
+                </li>
                 {%else%}
-                <li><a href="{%$BASE_URL%}my/index">{%$user.name%}</a></li>
+                <li {%if $nav_index=='homepage'%} class="active"{%/if%}>
+                    <a href="{%$BASE_URL%}user/homePage/id/{%$user.id%}">{%$user.nick|default:''%}</a>
+                </li>
                 <li><a href="{%$BASE_URL%}user/logout">退出</a></li>
                 {%/if%}
             </ul>

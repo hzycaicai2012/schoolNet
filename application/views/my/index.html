@@ -1,0 +1,57 @@
+{%extends file="layout/boot_base.html"%}
+{%block name="main"%}
+<div class="row" ng-controller="MainController" ng-cloak>
+    <div class="col-sm-8 blog-main">
+        <div class="article-list-wrap">
+            <div class="article-list-item-wrap" ng-repeat="article in articleList track by $index">
+                <div class="article-list-item-head clearfix">
+                    <div class="article-user-avatar">
+                        <img src="http://hdn.xnimg.cn/photos/hdn521/20150116/1655/h_head_EqkI_a06e0005e1b01986.jpg" width="50" title="冷兔">
+                    </div>
+                    <div class="article-user-info-wrap">
+                        <div class="article-user-name" ng-bind="article.article.user_name">
+                        </div>
+                        <div class="article-create-info"
+                             ng-bind="article.article.type_name + ' | ' + article.article.created">
+                        </div>
+                    </div>
+                </div>
+                <div class="article-list-item" ng-bind="article.article.content">
+                </div>
+                <div class="article-comment-list-wrap">
+                    <div class="article-comment-list-item-wrap clearfix"  ng-repeat="comment in article.comment">
+                        <a href="#" class="article-comment-avatar">
+                            <img src="http://hdn.xnimg.cn/photos/hdn121/20120805/1920/h_tiny_9hnF_5180000000231376.jpg" class="user-avatar">
+                        </a>
+                        <div class="article-comment-item">
+                            <p class="article-comment-item-info clearfix">
+                                <a href="#" class="user-name" target="_blank" ng-bind="comment.user_name"></a>
+                                <span class="article-comment-item-time" ng-bind="comment.created"></span>
+                            </p>
+                            <span class="article-comment-item-content">{{comment.content}}</span>
+                        </div>
+                    </div>
+                    <div class="article-comment-list-item-wrap clearfix">
+                        <a href="#" class="article-comment-avatar">
+                            <img src="http://hdn.xnimg.cn/photos/hdn121/20120805/1920/h_tiny_9hnF_5180000000231376.jpg" class="user-avatar">
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+        <div class="sidebar">
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>关于</h4>
+                <p><b>校园网</b>，致力于让同学们在毕业之后还可以交流互动，可以发布学校、学院或者班级的相关通知，增加大家直接的友谊。</p>
+                <p>好吧，我编不下去了~~</p>
+            </div>
+        </div>
+    </div>
+</div>
+{%/block%}
+{%block name="js" append%}
+<script src="{%$BASE_URL%}static/js/home/main.js"></script>
+{%/block%}

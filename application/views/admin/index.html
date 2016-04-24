@@ -1,25 +1,37 @@
 {%extends file="layout/boot_base.html"%}
 {%block name="main"%}
-<div class="row" ng-controller="MainController" ng-init="init({%$type%})" ng-cloak>
+<div class="row" ng-controller="AdminController" ng-init="init()" ng-cloak>
     <div class="col-sm-8 blog-main">
-        <div class="publish-area-wrap">
-            <textarea class="form-control publish-area-textarea"
-                      ng-model="publishArticle.content" rows="3"></textarea>
-            <div class="publish-area-controls">
-                <div class="ui-button" ng-click="changeArticleType(1)"
-                     ng-class="{'ui-active-button' : (publishArticle.type == 1)}">校内公开</div>
-                <div class="ui-button" ng-click="changeArticleType(2)"
-                     ng-class="{'ui-active-button' : (publishArticle.type == 2)}">院内公开</div>
-                <div class="ui-button" ng-click="changeArticleType(3)"
-                     ng-class="{'ui-active-button' : (publishArticle.type == 3)}">班内公开</div>
-                <div class="textarea-tips">还可输入{{1000-publishArticle.content.length}}字</div>
-            </div>
-            <div class="publish-area-submit clearfix">
-                <div type="button" ng-click="submitMessage()"
-                     class="btn btn-success publish-area-submit-btn">发布</div>
+        <div class="admin-operation-head">
+            <div class="admin-operation-head-wrap">
+                <div class="admin-op-button" ng-click="switchPage('school')"
+                     ng-class="{'admin-op-active-button' : (currentPage == 'school')}">添加学校</div>
+                <div class="admin-op-button" ng-click="switchPage('college')"
+                     ng-class="{'admin-op-active-button' : (currentPage == 'college')}">添加学院</div>
+                <div class="admin-op-button" ng-click="switchPage('grade')"
+                     ng-class="{'admin-op-active-button' : (currentPage == 'grade')}">添加班级</div>
             </div>
         </div>
-        <div class="article-list-wrap">
+        <div class="admin-page-operate-wrap" ng-show="currentPage == 'school'">
+            <div class="admin-page-operate-controls clearfix">
+                <input type="text" class="form-control" ng-model="schoolName" placeholder="请填写学校名">
+                <button type="button" class="btn btn-primary"
+                        ng-disabled="schoolName == ''" ng-click="addNewSchool()">提交</button>
+            </div>
+            <div class="admin-page-operate-content">
+                <table class="table table-hover table-striped">
+                    <tr>
+                        <th>序号</th>
+                        <th>校名</th>
+                        <th>创建时间</th>
+                    </tr>
+                    <tr ng-repeat="school in schoolList track by $index">
+                        <th scope="row" ng-bind="($index+1)"></th>
+                        <td ng-bind="school.name"></td>
+                        <td ng-bind="school.created"></td>
+                    </tr>
+                </table>
+            </div>
             <div class="article-list-item-wrap" ng-repeat="article in articleList track by $index">
                 <div class="article-list-item-head clearfix">
                     <div class="article-user-avatar">
@@ -70,11 +82,6 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
-            <div class="article-empty" ng-show="articleList.length == 0">
-                <img src="{%$BASE_URL%}static/img/home/empty.gif">
-                <p>啥都没有呢~</p>
             </div>
         </div>
     </div>
@@ -89,6 +96,9 @@
     </div>
 </div>
 {%/block%}
+{%block name="css" append%}
+<link href="{%$BASE_URL%}static/css/admin/admin.css" rel="stylesheet">
+{%/block%}
 {%block name="js" append%}
-<script src="{%$BASE_URL%}static/js/home/main.js"></script>
+<script src="{%$BASE_URL%}static/js/admin/admin.js"></script>
 {%/block%}

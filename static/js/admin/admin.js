@@ -1,10 +1,67 @@
 /**
- * Created by hongzhiyuan on 2016/4/22.
+ * Created by hongzhiyuan on 2016/4/24.
  */
-schoolNetModule.controller('MainController', ['$scope', '$http', function ($scope, $http) {
-    $scope.publishArticle = {
-        type: 4,
-        content: ''
+schoolNetModule.controller('AdminController', ['$scope', '$http', function ($scope, $http) {
+    $scope.currentPage = 'school';
+
+    $scope.switchPage = function(page) {
+        if (page == 'school') {
+            $scope.initSchoolData();
+        } else if (page == 'college') {
+            $scope.initCollegeData();
+        } else if (page == 'grade') {
+            $scope.initGradeData();
+        }
+        $scope.currentPage = page;
+    };
+
+    $scope.schoolList = [];
+    $scope.collegeList = [];
+    $scope.gradeList = [];
+
+    // for school page
+    $scope.schoolName = '';
+
+    // for college page
+    $scope.currentSchool = null;
+
+    // for grade page
+    $scope.currentCollege = null;
+
+    $scope.initSchoolData = function() {
+        $http.get(baseUrl + 'my/getSchoolList').success(function (res) {
+            console.log(res);
+            if (parseInt(res.errno, 10) === 0) {
+                $scope.schoolList = res.data;
+            } else {
+                alert(res.msg);
+            }
+        });
+    };
+
+    $scope.initCollegeData = function() {
+
+    };
+
+    $scope.initGradeData = function() {
+
+    };
+
+    $scope.addNewSchool = function() {
+        if ($scope.schoolName != '') {
+            var data = {
+                name: $scope.schoolName
+            };
+            $http.post(baseUrl + 'my/addNewSchool', data).success(function (res) {
+                console.log(res);
+                if (parseInt(res.errno, 10) === 0) {
+                    $scope.switchPage('school');
+                    $scope.schoolName = '';
+                } else {
+                    alert(res.msg);
+                }
+            });
+        }
     };
 
     $scope.replyComment = function(id, name, userComment) {
@@ -29,23 +86,8 @@ schoolNetModule.controller('MainController', ['$scope', '$http', function ($scop
         return article;
     };
 
-    $scope.init = function(type) {
-        type = parseInt(type, 10);
-        if (type < 1 || type > 3) {
-            type = 4;
-        }
-        $http.get(baseUrl + 'article/getArticleList/type/' + type).success(function (res) {
-            console.log(res);
-            if (parseInt(res.errno, 10) === 0) {
-                var articleList = [];
-                angular.forEach(res.data, function(item) {
-                    articleList.push(wrapArticle(item));
-                });
-                $scope.articleList = articleList;
-            } else {
-                $scope.articleList = [];
-            }
-        });
+    $scope.init = function() {
+        $scope.switchPage('school');
     };
 
     $scope.submitMessage = function() {

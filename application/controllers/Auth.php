@@ -38,7 +38,7 @@ class Auth extends CI_Controller {
                     'id' => $user->id,
                     'phone' => $user->phone,
                     'email' => $user->email,
-                    'admin' => $user->is_admin,
+                    'is_admin' => $user->is_admin,
                 );
                 $result['errno'] = 0;
                 $result['msg'] = 'success';

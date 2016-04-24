@@ -19,7 +19,11 @@ class User_Model extends CI_Model {
      * @return mixed
      */
     public function getUserById($user_id) {
-        $sql = "SELECT * FROM user WHERE id = ?";
+        $sql = "SELECT user.*, school.name as school_name,
+            college.name as college_name, grades.name as grade_name
+            FROM user inner join school on user.school_id = school.id
+            inner join college on user.college_id=college.id
+            inner join grades on user.grade_id = grades.id WHERE user.id = ?";
         $query = $this->db->query($sql, array(intval($user_id)));
         return $query->row();
     }

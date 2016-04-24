@@ -21,6 +21,11 @@ class Home extends BaseController {
     }
 
     public function index() {
+        if (!isset($_GET['type'])) {
+            $this->smarty3->assign('nav_index', 'home');
+        } else {
+            $this->smarty3->assign('nav_index', 'my');
+        }
         $type = isset($_GET['type']) ? intval($_GET['type']) : 4;
         $this->smarty3->assign('type', $type);
         $this->smarty3->display('home/index.html');

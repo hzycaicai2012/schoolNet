@@ -1,7 +1,10 @@
 {%extends file="layout/boot_base.html"%}
 {%block name="main"%}
-<div class="row" ng-controller="MainController" ng-init="init({%$type%})" ng-cloak>
+<div class="row user-info-wrap">
+</div>
+<div class="row" ng-controller="HomePageController" ng-init="init({%$id%})" ng-cloak>
     <div class="col-sm-8 blog-main">
+        {%if $is_me == 1%}
         <div class="publish-area-wrap">
             <textarea class="form-control publish-area-textarea"
                       ng-model="publishArticle.content" rows="3"></textarea>
@@ -19,14 +22,12 @@
                      class="btn btn-success publish-area-submit-btn">发布</div>
             </div>
         </div>
+        {%/if%}
         <div class="article-list-wrap">
             <div class="article-list-item-wrap" ng-repeat="article in articleList track by $index">
                 <div class="article-list-item-head clearfix">
                     <div class="article-user-avatar">
-                        <a href="{%$BASE_URL%}user/homePage/id/{{article.article.user_id}}" target="_blank">
-                            <img ng-src="{%$BASE_URL%}{{article.article.avatar}}"
-                                 width="50" title="{{article.article.user_name}}">
-                        </a>
+                        <img ng-src="{%$BASE_URL%}{{userInfo.avatar}}" width="50" title="冷兔">
                     </div>
                     <div class="article-user-info-wrap">
                         <div class="article-user-name" ng-bind="article.article.user_name">
@@ -40,20 +41,17 @@
                 </div>
                 <div class="article-comment-list-wrap">
                     <div class="article-comment-list-item-wrap clearfix"  ng-repeat="comment in article.comment">
-                        <a href="{%$BASE_URL%}user/homePage/id/{{comment.user_id}}"
+                        <a href="{%$BASE_URL%}user/homePage/id/{comment.user_id}"
                            target="_blank" class="article-comment-avatar">
                             <img ng-src="{%$BASE_URL%}{{comment.avatar}}" class="user-avatar">
                         </a>
                         <div class="article-comment-item">
                             <p class="article-comment-item-info clearfix">
-                                <a href="{%$BASE_URL%}user/homePage/id/{{comment.user_id}}"
-                                   target="_blank" class="user-name" target="_blank" ng-bind="comment.user_name"></a>
+                                <a href="{%$BASE_URL%}user/homePage/id/{comment.user_id}"
+                                   class="user-name" target="_blank" ng-bind="comment.user_name"></a>
                                 <span class="article-comment-item-time" ng-bind="comment.created"></span>
                             </p>
-                            <div class="article-comment-item-content"
-                                 ng-click="replyComment(comment.user_id, comment.user_name, article.userComment)">
-                                {{comment.content}}
-                            </div>
+                            <span class="article-comment-item-content">{{comment.content}}</span>
                         </div>
                     </div>
                     <div class="article-comment-list-item-wrap clearfix">
@@ -62,8 +60,7 @@
                             <img src="{%$BASE_URL%}{%$user.avatar%}" class="user-avatar">
                         </a>
                         <div class="article-comment-item clearfix">
-                            <input type="text" class="form-control comment-text-input" placeholder="输入回复"
-                                   ng-model="article.userComment.content">
+                            <input type="text" class="form-control comment-text-input" placeholder="输入回复" ng-model="article.userComment">
                             <button type="submit" class="btn btn-primary"
                                     ng-disabled="article.userComment == null || article.userComment == ''"
                                     ng-click="submitResponse(article)">回复</button>
@@ -81,14 +78,29 @@
     <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
         <div class="sidebar">
             <div class="sidebar-module sidebar-module-inset">
-                <h4>关于</h4>
-                <p><b>校园网</b>，致力于让同学们在毕业之后还可以交流互动，可以发布学校、学院或者班级的相关通知，增加大家直接的友谊。</p>
-                <p>好吧，我编不下去了~~</p>
+                <div class="user-info-avatar-wrap">
+                    <a href="{%$BASE_URL%}user/homePage/id/{{userInfo.id}}" target="_blank">
+                        <img ng-src="{%$BASE_URL%}{{userInfo.avatar}}">
+                    </a>
+                </div>
+                <div class="user-info-block" style="margin-top: 10px;">
+                    <div class="user-info-name">昵称：<span class="user-info-nick">{{userInfo.nick}}</span></div>
+                    <div class="user-info-name">姓名：{{userInfo.name}}</div>
+                    <div class="user-info-name">学校：{{userInfo.school_name}}</div>
+                    <div class="user-info-name">学院：{{userInfo.college_name}}</div>
+                    <div class="user-info-name">班级：{{userInfo.grade_name}}</div>
+                    <div class="user-info-name" ng-if="userInfo.email != ''">邮箱：{{userInfo.email}}</div>
+                </div>
+                <div class="user-info-controls">
+                </div>
             </div>
         </div>
     </div>
 </div>
 {%/block%}
+{%block name="css" append%}
+<link href="{%$BASE_URL%}static/css/user/home_page.css" rel="stylesheet">
+{%/block%}
 {%block name="js" append%}
-<script src="{%$BASE_URL%}static/js/home/main.js"></script>
+<script src="{%$BASE_URL%}static/js/user/home_page.js"></script>
 {%/block%}

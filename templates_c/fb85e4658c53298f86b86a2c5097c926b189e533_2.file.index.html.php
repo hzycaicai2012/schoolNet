@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.29, created on 2016-04-23 16:53:39
-  from "E:\xampp\htdocs\schoolNet\application\views\home\index.html" */
+/* Smarty version 3.1.29, created on 2016-04-24 10:02:06
+  from "E:\xampp\htdocs\schoolNet\application\views\admin\index.html" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.29',
-  'unifunc' => 'content_571b8c73747e89_74286860',
+  'unifunc' => 'content_571c7d7ef2a936_85154222',
   'file_dependency' => 
   array (
-    '3ca7cda2b7298710237ee59397fa69697c5611d6' => 
+    'fb85e4658c53298f86b86a2c5097c926b189e533' => 
     array (
-      0 => 'E:\\xampp\\htdocs\\schoolNet\\application\\views\\home\\index.html',
-      1 => 1461423216,
+      0 => 'E:\\xampp\\htdocs\\schoolNet\\application\\views\\admin\\index.html',
+      1 => 1461484924,
       2 => 'file',
     ),
   ),
@@ -20,13 +20,13 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
     'file:layout/boot_base.html' => 1,
   ),
 ),false)) {
-function content_571b8c73747e89_74286860 ($_smarty_tpl) {
+function content_571c7d7ef2a936_85154222 ($_smarty_tpl) {
 $_smarty_tpl->ext->_inheritance->init($_smarty_tpl, true);
 ?>
 
 <?php 
 $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "main", array (
-  0 => 'block_9704571b8c7372c905_49102924',
+  0 => 'block_3203571c7d7eeeffa5_10996769',
   1 => false,
   3 => 0,
   2 => 0,
@@ -34,8 +34,18 @@ $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "main", array (
 ?>
 
 <?php 
+$_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "css", array (
+  0 => 'block_28160571c7d7ef22c39_33723821',
+  1 => false,
+  3 => 0,
+  2 => 0,
+  'append' => true,
+));
+?>
+
+<?php 
 $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "js", array (
-  0 => 'block_1025571b8c73747e86_26427224',
+  0 => 'block_1593571c7d7ef26ab4_41147898',
   1 => false,
   3 => 0,
   2 => 0,
@@ -44,31 +54,42 @@ $_smarty_tpl->ext->_inheritance->processBlock($_smarty_tpl, 0, "js", array (
 $_smarty_tpl->ext->_inheritance->endChild($_smarty_tpl);
 $_smarty_tpl->smarty->ext->_subtemplate->render($_smarty_tpl, "file:layout/boot_base.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 2, false);
 }
-/* {block 'main'}  file:home/index.html */
-function block_9704571b8c7372c905_49102924($_smarty_tpl, $_blockParentStack) {
+/* {block 'main'}  file:admin/index.html */
+function block_3203571c7d7eeeffa5_10996769($_smarty_tpl, $_blockParentStack) {
 ?>
 
-<div class="row" ng-controller="MainController" ng-init="init(<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['type']->value, ENT_QUOTES, 'UTF-8');?>
-)" ng-cloak>
+<div class="row" ng-controller="AdminController" ng-init="init()" ng-cloak>
     <div class="col-sm-8 blog-main">
-        <div class="publish-area-wrap">
-            <textarea class="form-control publish-area-textarea"
-                      ng-model="publishArticle.content" rows="3"></textarea>
-            <div class="publish-area-controls">
-                <div class="ui-button" ng-click="changeArticleType(1)"
-                     ng-class="{'ui-active-button' : (publishArticle.type == 1)}">校内公开</div>
-                <div class="ui-button" ng-click="changeArticleType(2)"
-                     ng-class="{'ui-active-button' : (publishArticle.type == 2)}">院内公开</div>
-                <div class="ui-button" ng-click="changeArticleType(3)"
-                     ng-class="{'ui-active-button' : (publishArticle.type == 3)}">班内公开</div>
-                <div class="textarea-tips">还可输入{{1000-publishArticle.content.length}}字</div>
-            </div>
-            <div class="publish-area-submit clearfix">
-                <div type="button" ng-click="submitMessage()"
-                     class="btn btn-success publish-area-submit-btn">发布</div>
+        <div class="admin-operation-head">
+            <div class="admin-operation-head-wrap">
+                <div class="admin-op-button" ng-click="switchPage('school')"
+                     ng-class="{'admin-op-active-button' : (currentPage == 'school')}">添加学校</div>
+                <div class="admin-op-button" ng-click="switchPage('college')"
+                     ng-class="{'admin-op-active-button' : (currentPage == 'college')}">添加学院</div>
+                <div class="admin-op-button" ng-click="switchPage('grade')"
+                     ng-class="{'admin-op-active-button' : (currentPage == 'grade')}">添加班级</div>
             </div>
         </div>
-        <div class="article-list-wrap">
+        <div class="admin-page-operate-wrap" ng-show="currentPage == 'school'">
+            <div class="admin-page-operate-controls clearfix">
+                <input type="text" class="form-control" ng-model="schoolName" placeholder="请填写学校名">
+                <button type="button" class="btn btn-primary"
+                        ng-disabled="schoolName == ''" ng-click="addNewSchool()">提交</button>
+            </div>
+            <div class="admin-page-operate-content">
+                <table class="table table-hover table-striped">
+                    <tr>
+                        <th>序号</th>
+                        <th>校名</th>
+                        <th>创建时间</th>
+                    </tr>
+                    <tr ng-repeat="school in schoolList track by $index">
+                        <th scope="row" ng-bind="($index+1)"></th>
+                        <td ng-bind="school.name"></td>
+                        <td ng-bind="school.created"></td>
+                    </tr>
+                </table>
+            </div>
             <div class="article-list-item-wrap" ng-repeat="article in articleList track by $index">
                 <div class="article-list-item-head clearfix">
                     <div class="article-user-avatar">
@@ -128,12 +149,6 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['user']->value['avatar'], ENT_QUOTE
                         </div>
                     </div>
                 </div>
-
-            </div>
-            <div class="article-empty" ng-show="articleList.length == 0">
-                <img src="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['BASE_URL']->value, ENT_QUOTES, 'UTF-8');?>
-static/img/home/empty.gif">
-                <p>啥都没有呢~</p>
             </div>
         </div>
     </div>
@@ -150,13 +165,22 @@ static/img/home/empty.gif">
 <?php
 }
 /* {/block 'main'} */
-/* {block 'js'}  file:home/index.html */
-function block_1025571b8c73747e86_26427224($_smarty_tpl, $_blockParentStack) {
+/* {block 'css'}  file:admin/index.html */
+function block_28160571c7d7ef22c39_33723821($_smarty_tpl, $_blockParentStack) {
+?>
+
+<link href="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['BASE_URL']->value, ENT_QUOTES, 'UTF-8');?>
+static/css/admin/admin.css" rel="stylesheet">
+<?php
+}
+/* {/block 'css'} */
+/* {block 'js'}  file:admin/index.html */
+function block_1593571c7d7ef26ab4_41147898($_smarty_tpl, $_blockParentStack) {
 ?>
 
 <?php echo '<script'; ?>
  src="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['BASE_URL']->value, ENT_QUOTES, 'UTF-8');?>
-static/js/home/main.js"><?php echo '</script'; ?>
+static/js/admin/admin.js"><?php echo '</script'; ?>
 >
 <?php
 }

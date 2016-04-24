@@ -62,9 +62,17 @@ class Article_Model extends CI_Model {
      * @return mixed
      */
     public function getArticleById($id) {
-        $sql = "SELECT * FROM article WHERE id = ?";
+        $sql = "SELECT article.*, user.nick, user.avatar
+            FROM article inner join user on article.user_id=user.id WHERE article.id = ?";
         $query = $this->db->query($sql, array(intval($id)));
         return $query->row();
+    }
+
+    public function getArticleByUser($user_id) {
+        $sql = "SELECT article.*, user.nick, user.avatar
+            FROM article inner join user on article.user_id=user.id WHERE article.user_id = ?";
+        $query = $this->db->query($sql, array(intval($user_id)));
+        return $query->result();
     }
 
     /**
@@ -106,9 +114,10 @@ class Article_Model extends CI_Model {
      * @return mixed
      */
     public function getFriendArticleList($user) {
-        $sql = "SELECT article.* FROM article inner join friends
-            on article.user_id = friends.friend_id
-            WHERE friends.user_id = ? and article.type = 4 order by article.id desc";
+        $sql = "SELECT article.*, user.nick, user.avatar
+            FROM article inner join user on article.user_id = user.id
+            inner join friends on user.id=friends.friend_id
+            where friends.user_id=? and article.type = 4 order by article.id desc";
         $query = $this->db->query($sql, array($user->id));
         return $query->result();
     }
@@ -119,7 +128,9 @@ class Article_Model extends CI_Model {
      */
     public function getSchoolArticleList($user) {
         $schoolId = intval($user->school_id);
-        $sql = "SELECT * FROM article WHERE type = ? and school_id = ? order by id desc";
+        $sql = "SELECT article.*, user.nick, user.avatar FROM article inner join user
+            on article.user_id=user.id WHERE article.type = ? and article.school_id = ?
+            order by article.id desc";
         $query = $this->db->query($sql, array(self::SCHOOL_TYPE, $schoolId));
         return $query->result();
     }
@@ -130,7 +141,9 @@ class Article_Model extends CI_Model {
      */
     public function getCollegeArticleList($user) {
         $collegeId = intval($user->college_id);
-        $sql = "SELECT * FROM article WHERE type = ? and college_id = ? order by id desc";
+        $sql = "SELECT article.*, user.nick, user.avatar FROM article inner join user
+            on article.user_id=user.id WHERE article.type = ? and article.college_id = ?
+            order by article.id desc";
         $query = $this->db->query($sql, array(self::COLLEGE_TYPE, $collegeId));
         return $query->result();
     }
@@ -141,7 +154,9 @@ class Article_Model extends CI_Model {
      */
     public function getGradeArticleList($user) {
         $gradeId = intval($user->grade_id);
-        $sql = "SELECT * FROM article WHERE type = ? and grade_id = ? order by id desc";
+        $sql = "SELECT article.*, user.nick, user.avatar FROM article inner join user
+            on article.user_id=user.id WHERE article.type = ? and article.grade_id = ?
+            order by article.id desc";
         $query = $this->db->query($sql, array(self::GRADE_TYPE, $gradeId));
         return $query->result();
     }

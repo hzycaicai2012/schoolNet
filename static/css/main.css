@@ -171,3 +171,23 @@ body {
     width: 80%;
     float: left;
 }
+
+.article-empty {
+    text-align: center;
+    margin: 20px;
+}
+
+.article-empty p {
+    font-size: 16px;
+    font-weight: 600;
+    color: #666;
+    margin: 10px;
+}
+
+.article-comment-item-content {
+    cursor: pointer;
+}
+
+.unread-count {
+    color: #f00;
+}

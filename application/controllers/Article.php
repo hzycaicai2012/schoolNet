@@ -33,6 +33,28 @@ class Article extends CI_Controller {
     /**
      *
      */
+    public function getUserArticles() {
+        $id = intval($_GET['id']);
+        $result = array('errno' => 0, 'data' => array(), 'user' => array());
+        $userInfo = $this->user_model->getUserById($id);
+        if (isset($userInfo) && $id > 0) {
+            $result['user'] = $userInfo;
+            $articleList = $this->article_model->getArticleByUser($id);
+            foreach ($articleList as $item) {
+                $articleRow = array(
+                    'article' => $item,
+                    'comment' => array(),
+                );
+                $articleRow['comment'] = $this->comment_model->getCommentList($item->id);
+                $result['data'][] = $articleRow;
+            }
+        }
+        echo json_encode($result);
+    }
+
+    /**
+     *
+     */
     public function addComment() {
         $user = $this->session->user;
         if (!isset($user) || $user['id'] <= 0) {

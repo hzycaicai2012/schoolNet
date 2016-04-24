@@ -1,0 +1,61 @@
+{%extends file="layout/boot_base.html"%}
+{%block name="main"%}
+<div class="row" ng-controller="MessageController" ng-init="init()" ng-cloak>
+    <div class="col-sm-8 blog-main">
+        <div class="article-list-wrap">
+            <div class="row article-list-item-wrap clearfix" ng-repeat="message in messageList track by $index">
+                <div class="message-list-item-head clearfix">
+                    <div class="col-sm-9 message-list-item-title">
+                        {{message.status_name}}：{{message.title}}
+                    </div>
+                    <div ng-show="message.show_status == 0" ng-click="showMessage(message)"
+                         class="col-sm-3 message-list-item-control">
+                        展开详情
+                    </div>
+                    <div ng-show="message.show_status == 1"  ng-click="showMessage(message)"
+                         class="col-sm-3 message-list-item-control">
+                        收起详情
+                    </div>
+                </div>
+                <div class="message-list-item-content-wrap clearfix"
+                     ng-show="message.show_status == 1">
+                    <div class="col-sm-9 message-list-item-content">
+                        {{message.content}}
+                    </div>
+                </div>
+            </div>
+            <div class="article-empty" ng-show="articleList.length == 0">
+                <img src="{%$BASE_URL%}static/img/home/empty.gif">
+                <p>啥都没有呢~</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+        <div class="sidebar">
+            <div class="sidebar-module sidebar-module-inset">
+                <div class="user-info-avatar-wrap">
+                    <a href="{%$BASE_URL%}user/homePage/id/{{userInfo.id}}" target="_blank">
+                        <img ng-src="{%$BASE_URL%}{{userInfo.avatar}}">
+                    </a>
+                </div>
+                <div class="user-info-block" style="margin-top: 10px;">
+                    <div class="user-info-name">昵称：<span class="user-info-nick">{{userInfo.nick}}</span></div>
+                    <div class="user-info-name">姓名：{{userInfo.name}}</div>
+                    <div class="user-info-name">学校：{{userInfo.school_name}}</div>
+                    <div class="user-info-name">学院：{{userInfo.college_name}}</div>
+                    <div class="user-info-name">班级：{{userInfo.grade_name}}</div>
+                    <div class="user-info-name" ng-if="userInfo.email != ''">邮箱：{{userInfo.email}}</div>
+                </div>
+                <div class="user-info-controls">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%/block%}
+{%block name="css" append%}
+<link href="{%$BASE_URL%}static/css/user/message.css" rel="stylesheet">
+{%/block%}
+{%block name="js" append%}
+<script src="{%$BASE_URL%}static/js/user/message.js"></script>
+{%/block%}

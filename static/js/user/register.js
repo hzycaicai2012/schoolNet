@@ -60,7 +60,7 @@ schoolNetModule.controller('RegisterController', ['$scope', '$http', function ($
     };
 
     $scope.init = function() {
-        $http.get(baseUrl + 'user/baseInfo').success(function (res) {
+        $http.get(baseUrl + 'my/baseInfo').success(function (res) {
             console.log(res);
             if (parseInt(res.errno, 10) === 0) {
                 $scope.schoolList = schoolList = res.data.school_list;

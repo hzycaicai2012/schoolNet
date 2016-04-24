@@ -21,7 +21,8 @@ class Comment_Model extends CI_Model {
      */
     public function getCommentList($articleId) {
         $articleId = intval($articleId);
-        $sql = "SELECT * FROM article_comment WHERE article_id = ?";
+        $sql = "SELECT article_comment.*, user.avatar, user.nick FROM article_comment
+            inner join user on article_comment.user_id=user.id WHERE article_comment.article_id = ?";
         $query = $this->db->query($sql, array($articleId));
         return $query->result();
     }
@@ -41,6 +42,7 @@ class Comment_Model extends CI_Model {
         }
         $articleId = intval($data['id']);
         $content = $data['content'];
+        $reply_user = intval($data['reply_user']);
         $article = $this->article_model->getArticleById($articleId);
         if (!isset($article)) {
             return array('errno' => -2, 'msg' => '找不到该状态');
@@ -51,6 +53,7 @@ class Comment_Model extends CI_Model {
             'user_name' => $userInfo->nick,
             'article_id' => $articleId,
             'content' => $content,
+            'reply_user' => $reply_user,
             'created' => date('Y-m-d H:i:s'),
         );
         $this->db->insert('article_comment', $insertData);

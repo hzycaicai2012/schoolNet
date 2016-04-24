@@ -1,0 +1,31 @@
+.message-list-item-control {
+    text-align: center;
+    color: #0786e9;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.message-list-item-title {
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #333;
+}
+
+.message-list-item-head {
+    min-height: 30px;
+    line-height: 30px;
+}
+
+.message-list-item-content-wrap {
+    min-height: 20px;
+    line-height: 20px;
+    border-top: 1px solid #f5f5f5;
+}
+
+.message-list-item-content {
+    margin: 6px 0;
+    font-size: 12px;
+    color: #666;
+}
+
