@@ -40,7 +40,7 @@ schoolNetModule.controller('AdminController', ['$scope', '$http', function ($sco
     };
 
     $scope.initCollegeData = function() {
-
+        
     };
 
     $scope.initGradeData = function() {
