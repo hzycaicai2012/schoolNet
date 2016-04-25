@@ -72,6 +72,14 @@ class User_Model extends CI_Model {
 
     public function addNewUser($data) {
         if (isset($data)) {
+            $num = rand(1, 12);
+            $avatar = 'static/img/avatar/';
+            if ($num > 6) {
+                $avatar .= 'girl';
+                $num -= 6;
+            }
+            $avatar .= ($num . '.jpg');
+            $data['avatar'] = $avatar;
             $this->db->insert('user', $data);
             return true;
         }
