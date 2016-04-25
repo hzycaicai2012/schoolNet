@@ -40,6 +40,7 @@ class Auth extends CI_Controller {
                     'email' => $user->email,
                     'is_admin' => $user->is_admin,
                 );
+                $this->friend_model->addOwnFriend($user->id);
                 $result['errno'] = 0;
                 $result['msg'] = 'success';
             }
@@ -68,7 +69,6 @@ class Auth extends CI_Controller {
                     'created' => date('Y-m-d H:i:s'),
                 );
                 $res = $this->user_model->addNewUser($data);
-
                 if ($res === true) {
                     echo json_encode(array('errno' => 0, 'msg' => ''));
                 } else {
