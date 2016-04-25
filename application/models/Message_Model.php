@@ -31,6 +31,28 @@ class Message_Model extends CI_Model {
         $this->db->update('message', $data);
     }
 
+    /**
+     * @param $gradeId
+     * @param $nick
+     * @param $content
+     */
+    public function notifyAll($gradeId, $nick, $content) {
+        $sql = "SELECT * FROM `user` WHERE grade_id=?";
+        $query = $this->db->query($sql, array($gradeId));
+        $userList = $query->result();
+        foreach ($userList as $item) {
+            $title = '您的同班同学 ' . $nick . '发布了新状态~';
+            $content = $nick . '发布了新状态：' . $content . '。快去看看吧~';
+            $data = array(
+                'user_id' => $item->id,
+                'title' => $title,
+                'content' => $content,
+                'created' => date('Y-m-d H;i:s'),
+            );
+            $this->db->insert('message', $data);
+        }
+    }
+
     public function insertCommentMessage($articleId, $userId, $comment) {
         $replyUser = $this->user_model->getUserById($userId);
         $article = $this->article_model->getArticleById(intval($articleId));
