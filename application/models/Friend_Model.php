@@ -22,4 +22,21 @@ class Friend_Model extends CI_Model {
         $result = $query->result();
         return (count($result) > 0);
     }
+
+    /**
+     * @param $userId
+     */
+    public function addOwnFriend($userId) {
+        $sql = "SELECT * FROM `friends` WHERE user_id = ? and friend_id = ?";
+        $query = $this->db->query($sql, array(intval($userId), intval($userId)));
+        $friend = $query->row();
+        if (!isset($friend)) {
+            $data = array(
+                'user_id' => $userId,
+                'friend_id' => $userId,
+                'created' => date('Y-m-d H;i:s'),
+            );
+            $this->db->insert('friends', $data);
+        }
+    }
 }
