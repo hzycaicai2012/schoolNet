@@ -50,7 +50,7 @@ class Article_Model extends CI_Model {
                 $insertData['college_id'] = $userInfo->college_id;
                 break;
             case 3:
-                $this->message_model->notifyAll($userInfo->grade_id, $userInfo->nick, $data['content']);
+                $this->message_model->notifyAll($userInfo->grade_id, $userInfo, $data['content']);
                 $insertData['grade_id'] = $userInfo->grade_id;
                 break;
         }
