@@ -77,6 +77,8 @@ class User_Model extends CI_Model {
             if ($num > 6) {
                 $avatar .= 'girl';
                 $num -= 6;
+            } else {
+                $avatar .= 'boy';
             }
             $avatar .= ($num . '.jpg');
             $data['avatar'] = $avatar;
