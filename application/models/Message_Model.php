@@ -33,8 +33,11 @@ class Message_Model extends CI_Model {
 
     public function insertCommentMessage($articleId, $userId, $comment) {
         $replyUser = $this->user_model->getUserById($userId);
-        $user = $this->session->user;
         $article = $this->article_model->getArticleById(intval($articleId));
+        if (!isset($replyUser)) {
+            $replyUser = $this->user_model->getUserById($article->user_id);
+        }
+        $user = $this->session->user;
         $title = $user['nick'] . '回复了您';
         $content = $user['nick'] . '在状态“' . $article->content . '”中回复了您： ' . $comment;
         $data = array(

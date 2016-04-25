@@ -87,6 +87,7 @@ schoolNetModule.controller('MainController', ['$scope', '$http', function ($scop
                 content: article.userComment.content,
                 reply_user: article.userComment.user_id
             };
+            console.log(data);
             $http.post(baseUrl + 'article/addComment', data).success(function (res) {
                 if (parseInt(res.errno, 10) === 0) {
                     initArticleItem(data.id);
