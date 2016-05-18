@@ -89,15 +89,36 @@ class User_Model extends CI_Model {
     }
 
     /**
+     * @param int $school_id
+     * @param int $college_id
+     * @param int $grade_id
+     * @param string $user_name
      * @return mixed
      */
-    public function getUserList() {
+    public function getUserList($school_id=-1, $college_id=-1, $grade_id=-1, $user_name = '') {
         $sql = "SELECT user.*, school.name school_name,
             college.name college_name, grades.name grade_name FROM user
             inner join school on user.school_id=school.id
             inner join college on user.college_id=college.id
-            inner join grades on user.grade_id=grades.id WHERE 1 order by user.id desc";
-        $query = $this->db->query($sql, array());
+            inner join grades on user.grade_id=grades.id where 1 ";
+        $params = array();
+        if ($school_id > 0) {
+            $sql .= ' and school_id=?';
+            $params[] = intval($school_id);
+        }
+        if ($college_id > 0) {
+            $sql .= ' and college_id=?';
+            $params[] = intval($college_id);
+        }
+        if ($grade_id > 0) {
+            $sql .= ' and grade_id=? ';
+            $params[] = $grade_id;
+        }
+        if ($user_name !== '') {
+            $sql .= 'and nick like "%' . mysqli_escape_string($user_name) . '%"';
+        }
+        $sql .= ' order by user.id desc';
+        $query = $this->db->query($sql, $params);
         return $query->result();
     }
 }

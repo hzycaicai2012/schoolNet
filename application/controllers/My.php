@@ -136,7 +136,11 @@ class My extends CI_Controller {
 
     public function getUserList() {
         $result = array('errno' => 0, 'data' => array());
-        $result['data'] = $this->user_model->getUserList();
+        $school_id = isset($_GET['school_id']) ? intval($_GET['school_id']) : -1;
+        $college_id = isset($_GET['college_id']) ? intval($_GET['college_id']) : -1;
+        $grade_id = isset($_GET['grade_id']) ? intval($_GET['grade_id']) : -1;
+        $user_name = isset($_GET['user_name']) ? $_GET['user_name'] : '';
+        $result['data'] = $this->user_model->getUserList($school_id, $college_id, $grade_id, $user_name);
         echo json_encode($result);
     }
 

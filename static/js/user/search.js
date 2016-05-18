@@ -1,9 +1,7 @@
 /**
  * Created by hongzhiyuan on 2016/4/24.
  */
-schoolNetModule.controller('AdminController', ['$scope', '$http', function ($scope, $http) {
-    $scope.currentPage = 'school';
-
+schoolNetModule.controller('SearchController', ['$scope', '$http', function ($scope, $http) {
     $scope.switchPage = function(page) {
         $scope.currentPage = page;
         if (page != 'user') {
@@ -18,40 +16,56 @@ schoolNetModule.controller('AdminController', ['$scope', '$http', function ($sco
         }
     };
 
-    var schoolList = [];
-    var collegeList = [];
-    var gradeList = [];
+    var initCurrentSchool = function() {
+        $scope.currentSchool = {
+            id: -1,
+            name: '不限'
+        };
+    };
+
+    var initCurrentCollege = function() {
+        $scope.currentCollege = {
+            id: -1,
+            name: '不限'
+        };
+    };
+
+    var initCurrentGrade = function() {
+        $scope.currentGrade = {
+            id: -1,
+            name: '不限'
+        };
+    };
 
     $scope.schoolList = [];
     $scope.collegeList = [];
     $scope.gradeList = [];
 
-    // for school page
-    $scope.schoolName = '';
-    $scope.collegeName = '';
-    $scope.gradeName = '';
-
-    // for college page
-    $scope.currentSchool = null;
-
-    // for grade page
-    $scope.currentCollege = null;
+    $scope.userName = '';
 
     $scope.initSchoolData = function() {
         $http.get(baseUrl + 'my/getSchoolList').success(function (res) {
             console.log(res);
+            initCurrentSchool();
+            var schoolList = [];
+            schoolList.push($scope.currentSchool);
             if (parseInt(res.errno, 10) === 0) {
-                $scope.schoolList = res.data;
+                angular.forEach(res.data, function(item) {
+                    schoolList.push(item);
+                });
             } else {
-                $scope.schoolList = [];
+                schoolList = [];
             }
+            $scope.schoolList = schoolList;
+            initCurrentCollege();
+            initCurrentGrade();
             $scope.collegeList = [];
             $scope.gradeList = [];
         });
     };
 
     $scope.initUserData = function() {
-        $http.get(baseUrl + 'my/getUserList').success(function (res) {
+        $http.get(baseUrl + 'my/getUserList?school_id=' + $scope.currentSchool.id + '&college_id=' + $scope.currentCollege.id + '&grade_id=' + $scope.currentGrade.id).success(function (res) {
             console.log(res);
             if (parseInt(res.errno, 10) === 0) {
                 $scope.userList = res.data;
@@ -84,11 +98,14 @@ schoolNetModule.controller('AdminController', ['$scope', '$http', function ($sco
         if ($scope.currentSchool != null && $scope.currentSchool != '') {
             $http.get(baseUrl + 'my/getCollegeList/schoolId/' + $scope.currentSchool.id).success(function (res) {
                 console.log(res);
+                initCurrentCollege();
+                $scope.collegeList.push($scope.currentCollege);
                 if (parseInt(res.errno, 10) === 0) {
                     $scope.collegeList = res.data;
                 } else {
                     $scope.collegeList = [];
                 }
+                initCurrentGrade();
                 $scope.gradeList = [];
             });
         }
@@ -98,11 +115,17 @@ schoolNetModule.controller('AdminController', ['$scope', '$http', function ($sco
         if ($scope.currentCollege != null && $scope.currentCollege != '') {
             $http.get(baseUrl + 'my/getGradeList/collegeId/' + $scope.currentCollege.id).success(function (res) {
                 console.log(res);
+                initCurrentGrade();
+                $scope.gradeList.push($scope.currentGrade);
                 if (parseInt(res.errno, 10) === 0) {
                     $scope.gradeList = res.data;
                 } else {
                     $scope.gradeList = [];
                 }
+                $scope.gradeList.push({
+                    id: -1,
+                    name: '不限'
+                });
             });
         }
     };
@@ -115,64 +138,14 @@ schoolNetModule.controller('AdminController', ['$scope', '$http', function ($sco
         initGradeList();
     };
 
-    $scope.addNewSchool = function() {
-        if ($scope.schoolName != '') {
-            var data = {
-                name: $scope.schoolName
-            };
-            $http.post(baseUrl + 'my/addNewSchool', data).success(function (res) {
-                console.log(res);
-                if (parseInt(res.errno, 10) === 0) {
-                    $scope.switchPage('school');
-                    $scope.schoolName = '';
-                } else {
-                    alert(res.msg);
-                }
-            });
-        }
-    };
-
-    $scope.addNewCollege = function() {
-        if ($scope.currentSchool != null) {
-            var school = $scope.currentSchool;
-            var data = {
-                school_id: $scope.currentSchool.id,
-                college_name: $scope.collegeName
-            };
-            console.log(data);
-            $http.post(baseUrl + 'my/addNewCollege', data).success(function (res) {
-                console.log(res);
-                if (parseInt(res.errno, 10) === 0) {
-                    initCollegeList();
-                    $scope.collegeName = '';
-                } else {
-                    alert(res.msg);
-                }
-            });
-        }
-    };
-
-    $scope.addNewGrade = function() {
-        if ($scope.currentSchool != null && $scope.currentCollege != null) {
-            var data = {
-                school_id: $scope.currentCollege.school_id,
-                college_id: $scope.currentCollege.id,
-                name: $scope.gradeName
-            };
-            console.log(data);
-            $http.post(baseUrl + 'my/addNewGrade', data).success(function (res) {
-                console.log(res);
-                if (parseInt(res.errno, 10) === 0) {
-                    initGradeList();
-                    $scope.gradeName = '';
-                } else {
-                    alert(res.msg);
-                }
-            });
-        }
-    };
-
     $scope.init = function() {
-        $scope.switchPage('school');
+        $scope.initSchoolData();
+        $scope.userName = '';
     };
+
+    $scope.searchUser = function() {
+        if ($scope.userName !== '') {
+
+        }
+    }
 }]);

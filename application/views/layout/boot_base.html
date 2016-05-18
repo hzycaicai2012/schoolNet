@@ -60,6 +60,7 @@
                         <li><a href="{%$BASE_URL%}home/index/type/4">好友状态</a></li>
                     </ul>
                 </li>
+                <li {%if $nav_index=='search'%} class="active"{%/if%}><a href="{%$BASE_URL%}search">用户搜索</a></li>
                 {%if $user != null && $user.is_admin == 1%}
                 <li {%if $nav_index=='admin'%} class="active"{%/if%}><a href="{%$BASE_URL%}admin">管理后台</a></li>
                 {%/if%}

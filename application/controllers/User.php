@@ -68,4 +68,9 @@ class User extends BaseController
         $this->smarty3->assign('nav_index', 'messagelist');
         $this->smarty3->display('user/message_list.html');
     }
+
+    public function search() {
+        $this->smarty3->assign('nav_index', 'search');
+        $this->smarty3->display('user/search.html');
+    }
 }
